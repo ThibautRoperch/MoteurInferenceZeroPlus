@@ -37,20 +37,20 @@ environnement		permet de préciser le lieu de pratique du sport
 /////
 
 action = courir, glisser, grimper, shooter, smasher, nager, combattre
-moyen = bras, jambes, corps							// pour l'utilisateur
+moyen = bras, jambes, corps
 accessoire = ballon, skis, rien
-playstyle = individuel, collectif					// pour l'utilisateur
-environnement = salle,  eau, neige
+playstyle = individuel, collectif
+environnement = salle, eau, neige
 
 ////////////////////////////// BASE DE CONNAISSANCES //////////////////////////////
 
 //////
-// BASE DE REGLES (BR)
+// BASE DE REGLES (BR)          SI premisse(s) ALORS conclusion
 //////
 
 // règles de départ : ces règles réceptionnent les critères donnés par l'utilisateur
 
-SI moyen = jambes ET playstyle = individuel ALORS action = courir OU action = glisser
+SI moyen = jambes ET playstyle = individuel ALORS action = courir
 SI moyen = jambes ET playstyle = collectif ALORS action = courir
 SI moyen = bras ET playstyle = individuel ALORS action = grimper
 SI moyen = bras ET playstyle = collectif ALORS action = shooter OU action = smasher
@@ -59,7 +59,7 @@ SI moyen = corps ET playstyle = collectif ALORS action = nager
 
 // règles de transition qui alimentent la base de faits (arbre de recherche plus grand)
 
-a partir de action, remplir accessoire puis environnement
+SI action = courir ET envir
 
 // règles qui terminent la recherche (donnent une réponse qui ferme une branche de l'arbre)
 
