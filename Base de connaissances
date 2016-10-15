@@ -5,29 +5,30 @@ SI natation ET collectif ALORS water_polo
 Moteur 0+ : attribut -> valeur
 SI pratique = natation ET demande = collectif ALORS water_polo
 
+Objectif du moteur : conclure sur un sport
+
 ////////////////////////////// VALEURS POUR LE THEME CHOISI //////////////////////////////
 
 //////
 // SPORTS
 //////
 
-natation
-water_polo
-athlétisme
-football
-volley_ball
-basketball
-ski_de_fond
-ski_nautique
-judo
-escalade
+natation				nager, eau
+water_polo				nager, ballon, eau
+athlétisme				courir, terrain
+football				courir, ballon, terrain
+volley_ball				lancer, ballon, salle
+ski_de_fond				glisser, skis, neige
+ski_nautique			glisser, skis, eau
+judo					combattre, salle
+escalade				grimper, salle
 
 //////
 // CRITERES DE SPORT (VARIABLES)
 //////
 
 action				verbe d'action correspondant au sport
-moyen				partie du corps la plus travaillée ("corps" pour tout)
+//moyen				partie du corps la plus travaillée ("corps" pour tout)
 accessoire			différents accessoires ("rien" pour rien)
 playstyle			sport en équipe ou en solo
 environnement		permet de préciser le lieu de pratique du sport
@@ -36,35 +37,36 @@ environnement		permet de préciser le lieu de pratique du sport
 // DONNEES (VALEURS) (1 par variable par sous arbre)
 /////
 
-action = courir, glisser, grimper, shooter, smasher, nager, combattre
-moyen = bras, jambes, corps
-accessoire = ballon, skis, rien
-playstyle = individuel, collectif
-environnement = salle, eau, neige
+action = courir, glisser, grimper, lancer, nager, combattre
+//moyen = bras, jambes, corps
+accessoire = ballon, skis
+//playstyle = individuel, collectif
+environnement = salle, terrain, eau, neige
+sport = natation, water_polo, athlétisme, football, volley_ball, ski_de_fond, ski_nautique, judo, escalade
 
 ////////////////////////////// BASE DE CONNAISSANCES //////////////////////////////
 
 //////
-// BASE DE REGLES (BR)          SI premisse(s) ALORS conclusion
+// BASE DE REGLES (BR)			SI premisse(s) ALORS conclusion
 //////
 
-// règles de départ : ces règles réceptionnent les critères donnés par l'utilisateur
+//SI moyen = jambes ET playstyle = individuel ALORS action = courir
+//SI moyen = jambes ET playstyle = collectif ALORS action = courir
+//SI moyen = bras ET playstyle = individuel ALORS action = grimper
+//SI moyen = bras ET playstyle = collectif ALORS action = lancer
+//SI moyen = corps ET playstyle = individuel ALORS action = nager OU action = combattre
+//SI moyen = corps ET playstyle = collectif ALORS action = nager
 
-SI moyen = jambes ET playstyle = individuel ALORS action = courir
-SI moyen = jambes ET playstyle = collectif ALORS action = courir
-SI moyen = bras ET playstyle = individuel ALORS action = grimper
-SI moyen = bras ET playstyle = collectif ALORS action = shooter OU action = smasher
-SI moyen = corps ET playstyle = individuel ALORS action = nager OU action = combattre
-SI moyen = corps ET playstyle = collectif ALORS action = nager
+SI action = nager ALORS sport = natation
+SI action = courir ALORS sport = athlétisme
+SI action = lancer ET accessoire = ballon ALORS sport = volley_ball
 
-// règles de transition qui alimentent la base de faits (arbre de recherche plus grand)
+SI sport = natation ET accessoire = ballon ALORS sport = water_polo
+SI sport = athlétisme ET accessoire = ballon ALORS sport = football
 
-SI action = courir ET envir
 
-// règles qui terminent la recherche (donnent une réponse qui ferme une branche de l'arbre)
 
-SI action = nager ET demande = individuel ALORS natation
-SI action = nager ET demande = collectif ALORS water_polo
+
 SI action = courir ET demande = individuel ALORS athlétisme
 SI action = courir ET demande = collectif ALORS football
 SI action = courir ET demande = collectif ET demande = smasher ALORS volley_ball
@@ -73,6 +75,10 @@ SI action = glisser ALORS ski_de_fond
 SI action = glisser ET environnement = eau ALORS ski_nautique
 SI action = combattre ALORS judo
 SI action = grimper ALORS escalade
+
+// règles de départ : ces règles réceptionnent les critères donnés par l'utilisateur
+// règles de transition qui alimentent la base de faits (arbre de recherche plus grand)
+// règles qui terminent la recherche (donnent une réponse qui ferme une branche de l'arbre)
 
 BASE DE FAITS ?
 
