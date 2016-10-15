@@ -37,7 +37,7 @@ environnement		permet de préciser le lieu de pratique du sport
 // DONNEES (VALEURS) (1 par variable par sous arbre)
 /////
 
-action = courir, glisser, grimper, lancer, nager, combattre
+action = nager, courir, lancer, glisser, combattre, grimper 
 //moyen = bras, jambes, corps
 accessoire = ballon, skis
 //playstyle = individuel, collectif
@@ -50,6 +50,7 @@ sport = natation, water_polo, athlétisme, football, volley_ball, ski_de_fond, s
 // BASE DE REGLES (BR)			SI premisse(s) ALORS conclusion
 //////
 
+// règles de départ : ces règles réceptionnent les critères donnés par l'utilisateur
 //SI moyen = jambes ET playstyle = individuel ALORS action = courir
 //SI moyen = jambes ET playstyle = collectif ALORS action = courir
 //SI moyen = bras ET playstyle = individuel ALORS action = grimper
@@ -57,28 +58,32 @@ sport = natation, water_polo, athlétisme, football, volley_ball, ski_de_fond, s
 //SI moyen = corps ET playstyle = individuel ALORS action = nager OU action = combattre
 //SI moyen = corps ET playstyle = collectif ALORS action = nager
 
-SI action = nager ALORS sport = natation
-SI action = courir ALORS sport = athlétisme
-SI action = lancer ET accessoire = ballon ALORS sport = volley_ball
-
-SI sport = natation ET accessoire = ballon ALORS sport = water_polo
-SI sport = athlétisme ET accessoire = ballon ALORS sport = football
-
-
-
-
-SI action = courir ET demande = individuel ALORS athlétisme
-SI action = courir ET demande = collectif ALORS football
-SI action = courir ET demande = collectif ET demande = smasher ALORS volley_ball
-SI action = courir ET demande = collectif ET demande = shooter ALORS basketball
-SI action = glisser ALORS ski_de_fond
-SI action = glisser ET environnement = eau ALORS ski_nautique
-SI action = combattre ALORS judo
-SI action = grimper ALORS escalade
-
-// règles de départ : ces règles réceptionnent les critères donnés par l'utilisateur
 // règles de transition qui alimentent la base de faits (arbre de recherche plus grand)
 // règles qui terminent la recherche (donnent une réponse qui ferme une branche de l'arbre)
+//SI action = courir ET demande = individuel ALORS athlétisme
+//SI action = courir ET demande = collectif ALORS football
+//SI action = courir ET demande = collectif ET demande = smasher ALORS volley_ball
+//SI action = courir ET demande = collectif ET demande = shooter ALORS basketball
+//SI action = glisser ALORS ski_de_fond
+//SI action = glisser ET environnement = eau ALORS ski_nautique
+//SI action = combattre ALORS judo
+//SI action = grimper ALORS escalade
+
+
+SI action = nager ALORS environnement = eau
+SI action = courir ALORS environnement = terrain
+SI action = lancer ALORS environnement = salle
+SI action = glisser ET environnement = neige ALORS sport = ski_nautique
+SI action = glisser ET environnement = eau ALORS sport = ski_nautique
+SI action = combattre ALORS environnement = salle
+SI action = grimper ALORS environnement = salle
+
+SI environnement = eau ALORS sport = natation
+SI environnement = eau ET accessoire = ballon ALORS sport = water_polo
+SI environnement = terrain ALORS sport = athlétisme
+SI environnement = terrain ET accessoire ALORS sport = football
+SI environnement = salle ET accessoire = ballon ALORS sport = volley_ball
+
 
 BASE DE FAITS ?
 
