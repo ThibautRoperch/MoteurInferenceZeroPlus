@@ -4,8 +4,7 @@ Moteur 0 : propositions logiques
 SI natation ET collectif ALORS water_polo
 Moteur 0+ : attribut -> valeur
 SI pratique = natation ET demande = collectif ALORS water_polo
-test simple
-test2
+
 ////////////////////////////// VALEURS POUR LE THEME CHOISI //////////////////////////////
 
 //////
