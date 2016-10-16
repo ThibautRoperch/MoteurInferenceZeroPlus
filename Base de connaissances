@@ -28,7 +28,6 @@ escalade				grimper, salle
 //////
 
 action				verbe d'action correspondant au sport
-//moyen				partie du corps la plus travaillée ("corps" pour tout)
 accessoire			différents accessoires ("rien" pour rien)
 playstyle			sport en équipe ou en solo
 environnement		permet de préciser le lieu de pratique du sport
@@ -38,9 +37,7 @@ environnement		permet de préciser le lieu de pratique du sport
 /////
 
 action = nager, courir, lancer, glisser, combattre, grimper 
-//moyen = bras, jambes, corps
 accessoire = ballon, skis
-//playstyle = individuel, collectif
 environnement = salle, terrain, eau, neige
 sport = natation, water_polo, athlétisme, football, volley_ball, ski_de_fond, ski_nautique, judo, escalade
 
@@ -49,6 +46,44 @@ sport = natation, water_polo, athlétisme, football, volley_ball, ski_de_fond, s
 //////
 // BASE DE REGLES (BR)			SI premisse(s) ALORS conclusion
 //////
+
+SI action = nager ALORS environnement = eau
+SI action = courir ALORS environnement = terrain
+SI action = lancer ALORS environnement = salle
+SI action = glisser ET environnement = neige ALORS sport = ski_de_fond
+SI action = glisser ET environnement = eau ALORS sport = ski_nautique
+SI action = combattre ALORS environnement = salle
+SI action = grimper ALORS environnement = salle
+SI environnement = salle ET accessoire = ballon ALORS sport = volley_ball
+SI environnement = terrain ALORS sport = athlétisme
+SI environnement = terrain ET accessoire ALORS sport = football
+SI environnement = eau ALORS sport = natation
+SI environnement = eau ET accessoire = ballon ALORS sport = water_polo
+
+//////
+// BASE DE FAITS (BF)
+//////
+
+Via interface utilisateur
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//moyen				partie du corps la plus travaillée ("corps" pour tout)
+
+//moyen = bras, jambes, corps
+//playstyle = individuel, collectif
+
 
 // règles de départ : ces règles réceptionnent les critères donnés par l'utilisateur
 //SI moyen = jambes ET playstyle = individuel ALORS action = courir
@@ -68,22 +103,3 @@ sport = natation, water_polo, athlétisme, football, volley_ball, ski_de_fond, s
 //SI action = glisser ET environnement = eau ALORS ski_nautique
 //SI action = combattre ALORS judo
 //SI action = grimper ALORS escalade
-
-
-SI action = nager ALORS environnement = eau
-SI action = courir ALORS environnement = terrain
-SI action = lancer ALORS environnement = salle
-SI action = glisser ET environnement = neige ALORS sport = ski_nautique
-SI action = glisser ET environnement = eau ALORS sport = ski_nautique
-SI action = combattre ALORS environnement = salle
-SI action = grimper ALORS environnement = salle
-
-SI environnement = eau ALORS sport = natation
-SI environnement = eau ET accessoire = ballon ALORS sport = water_polo
-SI environnement = terrain ALORS sport = athlétisme
-SI environnement = terrain ET accessoire ALORS sport = football
-SI environnement = salle ET accessoire = ballon ALORS sport = volley_ball
-
-
-BASE DE FAITS ?
-
