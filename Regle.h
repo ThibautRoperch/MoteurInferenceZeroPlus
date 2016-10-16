@@ -8,7 +8,6 @@ private:
 	Proposition _conclusion;
 
 public:
-	Regle() {};
 	Regle(const Proposition[]& premisses, const Proposition& conclusion) : _premisses(Propositions(premisses)), _conclusion(conclusion) {};
 	Regle(const Propositions& premisses, const Proposition& conclusion) : _premisses(premisses), _conclusion(conclusion) {};
 	~Regle() {};
@@ -34,7 +33,7 @@ public:
 
 	// operateur de sortie
 
-	std::ostream& print(std::ostream& out, const Regle& r) {
+	std::ostream& operator<<(std::ostream& out, const Regle& r) {
 		return r.print(out);
 	}
 };

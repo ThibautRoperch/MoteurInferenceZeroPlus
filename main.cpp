@@ -1,13 +1,17 @@
 #include <iostream>
 #include <vector>
 
+#include "Regle.h"
+#include "Propositions.h"
+#include "Proposition.h"
+
 using namespace std;
 
 void chainage_avant(const vector<Regle>& base_de_regles, Propositions& base_de_faits, Proposition& but) {
 	while (!base_de_faits.contains(but)) {
 		for (Regle r : base_de_regles) {
-			if (r.validate(base_de_faits)) {
-				base_de_faits.insert(r.get_conclusion());
+			if (base_de_faits.contains(r.get_premisses())) {
+				base_de_faits.set(r.get_conclusion());
 			}
 		}
 	}
@@ -36,8 +40,8 @@ int main() {
 		case 1:
 			// Création des faits et ajout à la base de faits
 			
-			base_de_faits.insert( Proposition("sport", "ski_de_fond") );
-			base_de_faits.insert( Proposition("sport", "ski_de_fond") );
+			base_de_faits.set("action", "glisser"); // this.["action"] = "glisser"
+			base_de_faits.set("environnement", "neige");
 
 			chainage_avant(base_de_regles, base_de_faits, but);
 
