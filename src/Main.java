@@ -1,4 +1,4 @@
-import java.util.vector;
+import java.util.Vector;
 import java.io.*;
 
 public class Main {
@@ -28,7 +28,8 @@ public class Main {
 
 		// Création des règles et ajout à la base de règles
 		Propositions p = new Propositions();
-		p.set("action", "glisser"); p.set("environement", "neige");
+		p.set("action", "glisser");
+		p.set("environnement", "neige");
 		Regle r1 = new Regle(
 			p,
 			new Proposition("sport", "ski_de_fond")
