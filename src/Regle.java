@@ -1,8 +1,8 @@
 
 public class Regle {
 
-	private Propositions _premisses;
-	private Proposition _conclusion;
+	protected Propositions _premisses;
+	protected Proposition _conclusion;
 
 	// constructeurs
 
