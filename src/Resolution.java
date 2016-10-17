@@ -25,7 +25,15 @@ public class Resolution {
 	}
 
 	public void chainage_avant_profondeur() {
-
+		while(!this.base_de_faits.contains(but)) {
+			for(Object regle : this.base_de_regles) {
+				Regle r = (Regle)regle;
+				if(this.base_de_faits.contains(r.get_premisses())) {
+					this.base_de_faits.set(r.get_conclusion());
+					break;
+				}
+			}
+		}
 	}
 
 	public void chainage_arriere() {
