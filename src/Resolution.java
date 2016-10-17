@@ -1,7 +1,11 @@
 import java.util.Vector;
 import java.io.*;
 
-public class Main {
+public class Resolution {
+
+	public Resolution() {
+
+	}
 
 	public void chainage_avant(Vector<Regle> base_de_regles, Propositions base_de_faits, Proposition but) {
 		while(!base_de_faits.contains(but)) {
@@ -18,7 +22,7 @@ public class Main {
 
 	}
 
-	public static void main(String[] args) {
+	public void run() {
 		Vector<Regle> base_de_regles = new Vector<Regle>();
 		Propositions base_de_faits = new Propositions();
 		Proposition but;
@@ -54,6 +58,11 @@ public class Main {
 			default:
 				break;
 		}
+	}
+
+	public static void main(String[] args) {
+		Resolution res = new Resolution();
+		res.run();
 	}
 
 }
