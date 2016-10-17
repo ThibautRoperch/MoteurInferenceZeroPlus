@@ -29,7 +29,14 @@ public class Resolution {
 	}
 
 	public void chainage_arriere() {
-
+		while(true) {
+			for(Object regle : this.base_de_regles) {
+				Regle r = (Regle)regle;
+				if(this.base_de_faits.contains(r.get_conclusion())) {
+					this.base_de_faits.set(r.get_premisses());
+				}
+			}
+		}
 	}
 
 	public void resoudre() {

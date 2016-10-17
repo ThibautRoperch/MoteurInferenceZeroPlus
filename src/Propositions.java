@@ -21,6 +21,15 @@ public class Propositions {
 		this.set(p.get_variable(), p.get_valeur());
 	}
 
+	public void set(Propositions ps) {
+		Iterator i = ps.content.keySet().iterator();
+		while (i.hasNext()) {
+			String variable = (String)i.next();
+			String valeur = this.content.get(variable);
+			this.set(variable, valeur);
+		}
+	}
+
 	public boolean contains(String variable, String valeur) {
 		return this.content.containsKey(variable) && this.content.get(variable) == valeur;
 	}
@@ -29,8 +38,8 @@ public class Propositions {
 		return this.contains(p.get_variable(), p.get_valeur());
 	}
 
-	public boolean contains(Propositions p) {
-		Iterator i = p.content.keySet().iterator();
+	public boolean contains(Propositions ps) {
+		Iterator i = ps.content.keySet().iterator();
 		while (i.hasNext()) {
 			String variable = (String)i.next();
 			String valeur = this.content.get(variable);
