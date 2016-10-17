@@ -7,7 +7,7 @@ public class Main {
 	protected Propositions base_de_faits;
 	protected Proposition but;
 
-	public void chainage_avant(Vector base_de_regles, Propositions base_de_faits, Proposition but) {
+	public void chainage_avant(Vector<> base_de_regles, Propositions base_de_faits, Proposition but) {
 		while(!base_de_faits.contains(but)) {
 			for(Regle r : base_de_regles) {
 				if(base_de_faits.contains(r.get_premisses())) {
@@ -15,6 +15,10 @@ public class Main {
 				}
 			}
 		}
+	}
+
+	public void chainage_arriere(Vector<> base_de_regles, Proposition but) {
+
 	}
 
 	public static void main(String[] args) {
