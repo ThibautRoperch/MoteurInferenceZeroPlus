@@ -1,10 +1,12 @@
+import java.io.*;
+
 public class Main {
 
 	public static void main(String[] args) {
 		Resolution res = new Resolution();
 
 		String chaine="";
-		String fichier ="base_de_regle.txt";
+		String fichier ="base_de_regles.txt";
 		
 		//lecture du fichier texte	
 		try{
@@ -21,19 +23,6 @@ public class Main {
 		catch (Exception e){
 			System.out.println(e.toString());
 		}
-	
-		//création ou ajout dans le fichier texte
-		try {
-			FileWriter fw = new FileWriter (fichier);
-			BufferedWriter bw = new BufferedWriter (fw);
-			PrintWriter fichierSortie = new PrintWriter (bw); 
-				fichierSortie.println (chaine+"\n test de lecture et écriture !!"); 
-			fichierSortie.close();
-			System.out.println("Le fichier " + fichier + " a été créé!"); 
-		}
-		catch (Exception e){
-			System.out.println(e.toString());
-		}		
 
 		res.resoudre();
 	}
