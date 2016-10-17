@@ -29,8 +29,9 @@ public class Propositions {
 			this.set(variable, valeur);
 		}
 	}
-
+	
 	public boolean contains(String variable, String valeur) {
+		if (valeur.equals("")) return this.content.containsKey(variable); 
 		return this.content.containsKey(variable) && this.content.get(variable) == valeur;
 	}
 	
