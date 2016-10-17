@@ -1,10 +1,31 @@
 
 public class Proposition {
 
-    String variable;
-    String valeur;
+    protected String type;
+    protected String valeur;
 
-    public Proposition() {
+	// accesseurs
+    public String get_type() {
+        return type;
+    } 
 
+    public String get_valeur() {
+        return valeur;
     }
+
+	
+    // constructeurs
+
+    public Proposition(String v_variable, String v_valeur) {
+        this->variable = v_variable;
+        thsi->valeur = v_valeur;
+    }
+
+	public String toString() {
+		String res = "";
+		res += type + " = " + valeur;
+		return res;
+	}
+
+
 }
