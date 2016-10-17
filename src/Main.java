@@ -3,11 +3,11 @@ import java.io.*;
 
 public class Main {
 
-	protected Vector base_de_regles;
+	protected Vector<Regle> base_de_regles;
 	protected Propositions base_de_faits;
 	protected Proposition but;
 
-	public void chainage_avant(Vector base_de_regles, Propositions base_de_faits, Proposition but) {
+	public void chainage_avant(Vector<Regle> base_de_regles, Propositions base_de_faits, Proposition but) {
 		while(!base_de_faits.contains(but)) {
 			for(Object regle : base_de_regles) {
 				Regle r = (Regle)regle;
@@ -18,14 +18,13 @@ public class Main {
 		}
 	}
 
-	public void chainage_arriere(Vector base_de_regles, Proposition but) {
+	public void chainage_arriere(Vector<Regle> base_de_regles, Proposition but) {
 
 	}
 
 	public static void main(String[] args) {
-		base_de_regles = new Vector();
-		base_de_faits = new Propositions();
-		but = new Proposition();
+		Vector<Regle> base_de_regles = new Vector();
+		Propositions base_de_faits = new Propositions();
 
 		// Création des règles et ajout à la base de règles
 		Propositions p = new Propositions();
@@ -39,7 +38,7 @@ public class Main {
 		base_de_regles.addElement(r1);
 
 		// Création du but
-		but = new Proposition("sport", "ski_de_fond");
+		Proposition but = new Proposition("sport", "ski_de_fond");
 
 		String strategie = "1";
 		switch (strategie) {
