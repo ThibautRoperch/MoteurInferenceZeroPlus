@@ -31,7 +31,7 @@ class Regle {
 
 	// opérateur de sortie
 
-	public function __toString(std::ostream& out) {
+	public function __toString() {
 		$res = "SI ";
 		foreach ($this->premisses as $prem) $res .= "$prem ";
 		$res .= "ALORS ";
