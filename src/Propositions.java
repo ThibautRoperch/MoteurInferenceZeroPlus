@@ -13,24 +13,28 @@ public class Propositions {
 
 	// autres
 
+	public void set(String variable, String valeur) {
+		this.content.put(variable, valeur);
+	}
+	
 	public void set(Proposition p) {
 		this.set(p.get_variable(), p.get_valeur());
 	}
 
-	public void set(String variable, String value) {
-		this.content.put(variable, value);
+	public boolean contains(String variable, String valeur) {
+		return this.content.containsKey(variable) && this.content.get(variable) == valeur;
 	}
-
+	
 	public boolean contains(Proposition p) {
-		return this.content.containsKey(p.get_variable()) && this.content.get(p.get_variable()) == p.get_valeur();
+		return this.contains(p.get_variable(), p.get_valeur());
 	}
 
 	public boolean contains(Propositions p) {
 		Iterator i = p.content.keySet().iterator();
-		while (i.hasNext())
-		{
-			Proposition prop = (Proposition)i.next();
-			if (!this.contains(prop)) return false;
+		while (i.hasNext()) {
+			String variable = (String)i.next();
+			String valeur = this.content.get(variable);
+			if (!this.contains(variable, valeur)) return false;
 		}
 		return true;
 	}
@@ -41,15 +45,14 @@ public class Propositions {
 		String res = "";
 
 		Iterator i = this.content.keySet().iterator();
-		while (i.hasNext())
-		{
+		while (i.hasNext()) {
 			String variable = (String)i.next();
 			res += variable;
 			res += " = ";
-			res += (String)this.content.get(variable);
+			res += this.content.get(variable);
 
 			if (i.hasNext()) {
-				res += " && ";
+				res += "\n";
 			}
 		}
 
