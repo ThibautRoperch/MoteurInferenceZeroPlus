@@ -7,7 +7,7 @@ public class Main {
 	protected Propositions base_de_faits;
 	protected Proposition but;
 
-	public void chainage_avant(Vector<> base_de_regles, Propositions base_de_faits, Proposition but) {
+	public void chainage_avant(Vector base_de_regles, Propositions base_de_faits, Proposition but) {
 		while(!base_de_faits.contains(but)) {
 			for(Regle r : base_de_regles) {
 				if(base_de_faits.contains(r.get_premisses())) {
@@ -17,7 +17,7 @@ public class Main {
 		}
 	}
 
-	public void chainage_arriere(Vector<> base_de_regles, Proposition but) {
+	public void chainage_arriere(Vector base_de_regles, Proposition but) {
 
 	}
 
@@ -36,11 +36,11 @@ public class Main {
 		base_de_regles.addElement(r1);
 
 		// Création du but
-		but = new Proposition("sprt", "ski_de_fond");
+		but = new Proposition("sport", "ski_de_fond");
 
-		int strategie = 1;
+		String strategie = "1";
 		switch (strategie) {
-			case 1:
+			case "1":
 				//Création des faits et ajout à la base de faitss
 				base_de_faits.set("action", "glisser");
 				base_de_faits.set("environnement", "neige");
@@ -48,7 +48,7 @@ public class Main {
 				chainage_avant(base_de_regles, base_de_faits, but);
 
 			break;
-			case 2:
+			case "2":
 				chainage_arriere(base_de_regles, but);
 
 				break;
