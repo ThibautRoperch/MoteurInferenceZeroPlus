@@ -25,7 +25,7 @@ int main() {
 	// Création des règles et ajout à la base de règles
 
 	Regle r1(
-		{ Proposition("action", "glisser"), Proposition("environement", "neige") },
+		{ Proposition("action", "glisser"), Proposition("environnement", "neige") },
 		Proposition("sport", "ski_de_fond")
 	);
 	base_de_regles.push_back(r1);
