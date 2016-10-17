@@ -7,7 +7,7 @@ public class Resolution {
 
 	}
 
-	public void chainage_avant(Vector<Regle> base_de_regles, Propositions base_de_faits, Proposition but) {
+	public void chainage_avant_larg(Vector<Regle> base_de_regles, Propositions base_de_faits, Proposition but) {
 		while(!base_de_faits.contains(but)) {
 			for(Object regle : base_de_regles) {
 				Regle r = (Regle)regle;
@@ -18,11 +18,15 @@ public class Resolution {
 		}
 	}
 
+	public void chainage_avant_prof(Vector<Regle> base_de_regles, Propositionsbase_de_faits, Proposition but) {
+
+	}	
+
 	public void chainage_arriere(Vector<Regle> base_de_regles, Proposition but) {
 
 	}
 
-	public void run() {
+	public void resoudre() {
 		Vector<Regle> base_de_regles = new Vector<Regle>();
 		Propositions base_de_faits = new Propositions();
 		Proposition but;
@@ -48,13 +52,17 @@ public class Resolution {
 				base_de_faits.set("action", "glisser");
 				base_de_faits.set("environnement", "neige");
 
-				chainage_avant(base_de_regles, base_de_faits, but);
+				chainage_avant_larg(base_de_regles, base_de_faits, but);
 
 			break;
 			case "2":
-				chainage_arriere(base_de_regles, but);
+				chainage_avant_prof(base_de_regles, but);
 
 				break;
+			case "3":
+				chainage_arriere(base_de_regles, but);
+
+			break;
 			default:
 				break;
 		}
