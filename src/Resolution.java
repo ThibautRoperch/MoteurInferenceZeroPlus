@@ -72,19 +72,15 @@ public class Resolution {
 				base_de_faits.set("action", "glisser");
 				base_de_faits.set("environnement", "neige");
 
-<<<<<<< HEAD
 				chainage_avant_larg(base_de_regles, base_de_faits, but);
 
 			break;
 			case "2":
 				chainage_avant_prof(base_de_regles, but);
-=======
-				chainage_avant();
 
 			break;
 			case "2":
 				chainage_arriere();
->>>>>>> ae7b99873b64d8b3fa6a49dba98193cd23a0b595
 
 				break;
 			case "3":
