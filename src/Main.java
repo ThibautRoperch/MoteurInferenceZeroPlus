@@ -4,7 +4,7 @@ public class Main {
 		Resolution res = new Resolution();
 
 		String chaine="";
-		String fichier ="fichiertexte.txt";
+		String fichier ="base_de_regle.txt";
 		
 		//lecture du fichier texte	
 		try{
