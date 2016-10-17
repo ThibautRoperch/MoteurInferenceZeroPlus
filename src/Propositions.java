@@ -7,20 +7,20 @@ public class Propositions {
 	// constructeur
 
     public Propositions() {
-        this->content = new HashMap;
+        this.content = new HashMap();
     }
 
 	// autres
 
     public void set(Proposition p) {
-        this->content.put(p.get_type(), p.get_value());
+        this.content.put(p.get_type(), p.get_value());
     }
 
     public vois set(String type, String value) {
-        this->content.put(type, value);
+        this.content.put(type, value);
     }
 
     public boolean contains(Proposition p) {
-        return this->content.containsKey(p.get_type()) && this->content.contains(p.get_value());
+        return this.content.containsKey(p.get_type()) && this.content.containsValue(p.get_value());
     }
 }

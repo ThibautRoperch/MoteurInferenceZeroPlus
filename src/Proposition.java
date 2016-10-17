@@ -17,8 +17,8 @@ public class Proposition {
     // constructeurs
 
     public Proposition(String v_variable, String v_valeur) {
-        this->variable = v_variable;
-        thsi->valeur = v_valeur;
+        this.variable = v_variable;
+        this.valeur = v_valeur;
     }
 
 	public String toString() {
