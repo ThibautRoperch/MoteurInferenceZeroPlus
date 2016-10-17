@@ -13,7 +13,7 @@ public class Resolution {
 		but = new Proposition();
 	}
 
-	public void chainage_avant() {
+	public void chainage_avant_largeur() {
 		while(!this.base_de_faits.contains(but)) {
 			for(Object regle : this.base_de_regles) {
 				Regle r = (Regle)regle;
@@ -24,11 +24,15 @@ public class Resolution {
 		}
 	}
 
+	public void chainage_avant_profondeur() {
+
+	}
+
 	public void chainage_arriere() {
 
 	}
 
-	public void run() {
+	public void resoudre() {
 		// Création des règles et ajout à la base de règles
 		Propositions p = new Propositions();
 		p.set("action", "glisser");
@@ -52,13 +56,20 @@ public class Resolution {
 
 				System.out.println("\n=== BF AVANT ===");
 				System.out.println(base_de_faits);
-				chainage_avant();
+				chainage_avant_largeur();
 
-			break;
+				break;
+
 			case "2":
+				chainage_avant_profondeur();
+
+				break;
+
+			case "3":
 				chainage_arriere();
 
 				break;
+				
 			default:
 				break;
 		}
