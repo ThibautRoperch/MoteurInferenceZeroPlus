@@ -1,5 +1,3 @@
-import Proposition;
-import Propositions;
 
 public class Regle {
 

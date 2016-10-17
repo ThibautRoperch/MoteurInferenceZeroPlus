@@ -1,27 +1,21 @@
 import java.util.vector;
 import java.io.*;
-import Propositions;
-import Proposition;
-import Regle;
-
-
-
 
 public class Main {
+
 	protected Vector base_de_regles;
 	protected Propositions base_de_faits;
 	protected Proposition but;
 
-
-public chainage_avant(Vector base_de_regles, Propositions base_de_faits, Proposition but) {
-	while(!base_de_faits.contains(but)) {
-		for(Regle r : base_de_regles) {
-			if(base_de_faits.contains(r.get_premisses())) {
-				base_de_faits.set(r.get_conclusion());
+	public void chainage_avant(Vector base_de_regles, Propositions base_de_faits, Proposition but) {
+		while(!base_de_faits.contains(but)) {
+			for(Regle r : base_de_regles) {
+				if(base_de_faits.contains(r.get_premisses())) {
+					base_de_faits.set(r.get_conclusion());
+				}
 			}
 		}
 	}
-}
 
 	public static void main(String[] args) {
 		base_de_regles = new Vector();
@@ -30,9 +24,9 @@ public chainage_avant(Vector base_de_regles, Propositions base_de_faits, Proposi
 
 		// Création des règles et ajout à la base de règles
 		//Regle r1 = new Regle(new Proposition("action", "glisser"), new Proposition("environnement", "neige"))
-		Regle r1(
-			{ Proposition("action", "glisser"), Proposition("environement", "neige") },
-			Proposition("sport", "ski_de_fond")
+		Regle r1 = new Regle(
+			{ new Proposition("action", "glisser"), new Proposition("environement", "neige") },
+			new Proposition("sport", "ski_de_fond")
 		);
 
 		base_de_regles.addElement(r1);
@@ -41,7 +35,7 @@ public chainage_avant(Vector base_de_regles, Propositions base_de_faits, Proposi
 		but = new Proposition("sprt", "ski_de_fond");
 
 		int strategie = 1;
-		switch(strategie) {
+		switch (strategie) {
 			case 1:
 				//Création des faits et ajout à la base de faitss
 				base_de_faits.set("action", "glisser");
