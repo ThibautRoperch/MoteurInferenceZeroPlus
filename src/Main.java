@@ -9,7 +9,8 @@ public class Main {
 
 	public void chainage_avant(Vector base_de_regles, Propositions base_de_faits, Proposition but) {
 		while(!base_de_faits.contains(but)) {
-			for(Regle r : base_de_regles) {
+			for(Object regle : base_de_regles) {
+				Regle r = (Regle)regle;
 				if(base_de_faits.contains(r.get_premisses())) {
 					base_de_faits.set(r.get_conclusion());
 				}

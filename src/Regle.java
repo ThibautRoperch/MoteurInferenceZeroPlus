@@ -41,9 +41,7 @@ public class Regle {
 	// operateur de sortie
 
 	public String toString() {
-		String res = "SI ";
-		for (Proposition prem : this.premisses) res += prem + " ";
-		res += "ALORS " + this.conclusion;
+		String res = "SI " + this.premisses + " ALORS " + this.conclusion;
 		return res;
 	}
 }

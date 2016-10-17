@@ -1,26 +1,59 @@
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Propositions {
 
-    protected HashMap content;
+	protected HashMap content;
 
 	// constructeur
 
-    public Propositions() {
-        this.content = new HashMap();
-    }
+	public Propositions() {
+		this.content = new HashMap();
+	}
 
 	// autres
 
-    public void set(Proposition p) {
-        this.content.put(p.get_type(), p.get_value());
-    }
+	public void set(Proposition p) {
+		this.content.put(p.get_variable(), p.get_valeur());
+	}
 
-    public void set(String type, String value) {
-        this.content.put(type, value);
-    }
+	public void set(String variable, String value) {
+		this.content.put(variable, value);
+	}
 
-    public boolean contains(Proposition p) {
-        return this.content.containsKey(p.get_type()) && this.content.containsValue(p.get_value());
-    }
+	public boolean contains(Proposition p) {
+		return this.content.containsKey(p.get_variable()) && this.content.containsValue(p.get_valeur());
+	}
+
+	public boolean contains(Propositions p) {
+		Iterator i = p.content.keySet().iterator();
+		while (i.hasNext())
+		{
+			if (this.content.containsKey(p.get_variable()) && this.content.containsValue(p.get_valeur())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// operateur de sortie
+
+	public String toString() {
+		String res = "";
+
+		Iterator i = this.content.keySet().iterator();
+		while (i.hasNext())
+		{
+			String variable = (String)i.next();
+			res += variable;
+			res += " = ";
+			res += (String)this.content.get(variable);
+
+			if (i.hasNext()) {
+				res += " && ";
+			}
+		}
+
+		return res;
+	}
 }
