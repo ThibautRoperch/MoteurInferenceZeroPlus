@@ -16,7 +16,7 @@ public class Propositions {
         this.content.put(p.get_type(), p.get_value());
     }
 
-    public vois set(String type, String value) {
+    public void set(String type, String value) {
         this.content.put(type, value);
     }
 

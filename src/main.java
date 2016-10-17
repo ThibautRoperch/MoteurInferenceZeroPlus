@@ -27,9 +27,10 @@ public class Main {
 		but = new Proposition();
 
 		// Création des règles et ajout à la base de règles
-		//Regle r1 = new Regle(new Proposition("action", "glisser"), new Proposition("environnement", "neige"))
+		Propositions p = new Propositions();
+		p.set("action", "glisser"); p.set("environement", "neige");
 		Regle r1 = new Regle(
-			{ new Proposition("action", "glisser"), new Proposition("environement", "neige") },
+			p,
 			new Proposition("sport", "ski_de_fond")
 		);
 

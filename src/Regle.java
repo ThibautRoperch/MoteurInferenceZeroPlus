@@ -1,47 +1,49 @@
 
 public class Regle {
 
-	protected Propositions _premisses;
-	protected Proposition _conclusion;
+	protected Propositions premisses;
+	protected Proposition conclusion;
 
 	// constructeurs
 
-	public Regle(Proposition[] premisses, Proposition conclusion) {
-		_premisses = Propositions(premisses);
-		_conclusion = conclusion;
+	public Regle(Proposition premisse, Proposition conclusion) {
+		Propositions premisses = new Propositions();
+		premisses.set(premisse);
+		this.premisses = premisses;
+		this.conclusion = conclusion;
 	}
 
 	public Regle(Propositions premisses, Proposition conclusion) {
-		_premisses = premisses;
-		_conclusion = conclusion;
+		this.premisses = premisses;
+		this.conclusion = conclusion;
 	}
 
 	// accesseurs
 
 	public Propositions get_premisses() {
-		return _premisses;
+		return this.premisses;
 	}
 
 	public Proposition get_conclusion() {
-		return _conclusion;
+		return this.conclusion;
 	}
 
 	// mutateurs
 
 	public void set_premisses(Propositions premisses) {
-		_premisses = premisses;
+		this.premisses = premisses;
 	}
 
 	public void set_conclusion(Proposition conclusion) {
-		_conclusion = conclusion;
+		this.conclusion = conclusion;
 	}
 
 	// operateur de sortie
 
 	public String toString() {
 		String res = "SI ";
-		for (Proposition prem : _premisses) res += prem + " ";
-		res += "ALORS " + conclusion;
+		for (Proposition prem : this.premisses) res += prem + " ";
+		res += "ALORS " + this.conclusion;
 		return res;
 	}
 }
