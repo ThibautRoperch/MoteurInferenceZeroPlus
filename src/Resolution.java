@@ -59,10 +59,4 @@ public class Resolution {
 				break;
 		}
 	}
-
-	public static void main(String[] args) {
-		Resolution res = new Resolution();
-		res.run();
-	}
-
 }
