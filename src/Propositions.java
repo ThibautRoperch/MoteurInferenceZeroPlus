@@ -22,16 +22,15 @@ public class Propositions {
 	}
 
 	public boolean contains(Proposition p) {
-		return this.content.containsKey(p.get_variable()) && this.content.containsValue(p.get_valeur());
+		return this.content.containsKey(p.get_variable()) && this.content.get(p.get_variable()) == p.get_valeur();
 	}
 
 	public boolean contains(Propositions p) {
 		Iterator i = p.content.keySet().iterator();
 		while (i.hasNext())
 		{
-			if (this.content.containsKey(p.get_variable()) && this.content.containsValue(p.get_valeur())) {
-				return false;
-			}
+			Proposition prop = (Proposition)i.next();
+			if (!contains(prop)) return false;
 		}
 		return true;
 	}
