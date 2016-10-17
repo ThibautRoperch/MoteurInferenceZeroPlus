@@ -23,8 +23,8 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Vector<Regle> base_de_regles = new Vector();
-		Propositions base_de_faits = new Propositions();
+		base_de_regles = new Vector<Regle>();
+		base_de_faits = new Propositions();
 
 		// Création des règles et ajout à la base de règles
 		Propositions p = new Propositions();

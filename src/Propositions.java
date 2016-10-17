@@ -3,18 +3,18 @@ import java.util.Iterator;
 
 public class Propositions {
 
-	protected HashMap content;
+	protected HashMap<String, String> content;
 
 	// constructeur
 
 	public Propositions() {
-		this.content = new HashMap();
+		this.content = new HashMap<String, String>();
 	}
 
 	// autres
 
 	public void set(Proposition p) {
-		this.content.put(p.get_variable(), p.get_valeur());
+		this.set(p.get_variable(), p.get_valeur());
 	}
 
 	public void set(String variable, String value) {
@@ -30,7 +30,7 @@ public class Propositions {
 		while (i.hasNext())
 		{
 			Proposition prop = (Proposition)i.next();
-			if (!contains(prop)) return false;
+			if (!this.contains(prop)) return false;
 		}
 		return true;
 	}

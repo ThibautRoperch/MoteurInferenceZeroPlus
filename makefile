@@ -2,7 +2,7 @@
 
 all:
 	@echo "# Compilation des classes"
-	find -name "*.java" | xargs javac -d bin
+	find -name "*.java" | xargs javac -d bin -Xlint:unchecked
 
 launch:
 	@echo "# Execution de la classe Main"
