@@ -3,9 +3,9 @@ import java.io.*;
 
 public class Resolution {
 
-	private Vector<Regle> base_de_regles = new Vector<Regle>();
-	private Propositions base_de_faits = new Propositions();
-	private Proposition but;
+	protected Vector<Regle> base_de_regles = new Vector<Regle>();
+	protected Propositions base_de_faits = new Propositions();
+	protected Proposition but;
 	
 	public Resolution() {
 		base_de_regles = new Vector<Regle>();
@@ -50,6 +50,8 @@ public class Resolution {
 				base_de_faits.set("action", "glisser");
 				base_de_faits.set("environnement", "neige");
 
+				System.out.println("\n=== BF AVANT ===");
+				System.out.println(base_de_faits);
 				chainage_avant();
 
 			break;
@@ -61,6 +63,7 @@ public class Resolution {
 				break;
 		}
 
+		System.out.println("\n=== BF APRES ===");
 		System.out.println(base_de_faits);
 	}
 }
