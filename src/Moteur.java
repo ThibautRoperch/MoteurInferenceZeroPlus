@@ -71,7 +71,8 @@ public class Moteur {
 				if (this.base_de_faits.contains(r.get_premisses())) { // les premisses de la règle correspondent à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la regle
 				}
-				for (Object Regle r_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
+				for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
+					Regle r_valide = (Regle)regle_valide;
 					this.base_de_faits.set(r.get_conclusion()); // verifier que ce fait n'existe pas deja ?
 					// ôter la regle de l'ensemble de base_de_regles
 				}
@@ -87,7 +88,8 @@ public class Moteur {
 				if (this.base_de_faits.contains(r.get_premisses())) { // les premisses de la règle correspondent à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la regle
 				}
-				for (Object Regle r_valide : regles_valides) { // choix d'une règle mise de côté et supprimer cette règle de la base de connaissances
+				for (Object regle_valide : regles_valides) { // choix d'une règle mise de côté et supprimer cette règle de la base de connaissances
+					Regle r_valide = (Regle)regle_valide;
 					this.base_de_faits.set(r.get_conclusion()); // verifier que ce fait n'existe pas deja ?
 					// ôter la regle de l'ensemble de base_de_regles
 					break;
