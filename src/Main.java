@@ -6,22 +6,41 @@ public class Main {
 		Moteur m = new Moteur();
 
 
-		String chaine="";
-		String fichier ="base_de_regles.txt";
+		String fichier = "base_de_regles.txt";
 		
-		//lecture du fichier texte	
-		try{
-			InputStream ips=new FileInputStream(fichier); 
-			InputStreamReader ipsr=new InputStreamReader(ips);
-			BufferedReader br=new BufferedReader(ipsr);
+		// lecture du fichier texte	
+		try {
+			InputStream ips = new FileInputStream(fichier); 
+			InputStreamReader ipsr = new InputStreamReader(ips);
+			BufferedReader br = new BufferedReader(ipsr);
 			String ligne;
-			while ((ligne=br.readLine())!=null){
-				System.out.println(ligne);
-				chaine+=ligne+"\n";
+			Propositions premisses = new Propositions();
+			Proposition conclusion = new Proposition();
+			boolean lire_fichier = ((ligne = br.readLine()) != null) ? true : false;
+			while (lire_fichier) {
+				while (ligne.equals("")) ligne = br.readLine();
+				if (ligne.equals("SI")) {
+					ligne = br.readLine();
+					while (!ligne.equals("ALORS") && !ligne.equals("") && ligne != null) {
+						String proposition[] = ligne.split("=");
+						premisses.set(proposition[0], proposition[1]);
+						ligne = br.readLine();
+					}
+					if (ligne.equals("ALORS")) {
+						ligne = br.readLine();
+						String proposition[] = ligne.split("=");
+						conclusion.set_variable(proposition[0]);
+						conclusion.set_valeur(proposition[1]);
+						ligne = br.readLine();
+					}
+					m.ajouter_regle(premisses, conclusion);
+					premisses.clear();
+				}
+				if (ligne == null) lire_fichier = false;
 			}
 			br.close(); 
-		}		
-		catch (Exception e){
+		}
+		catch (Exception e) {
 			System.out.println(e.toString());
 		}
 

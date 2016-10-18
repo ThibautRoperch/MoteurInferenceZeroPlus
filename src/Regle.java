@@ -7,15 +7,13 @@ public class Regle {
 	// constructeurs
 
 	public Regle(Proposition premisse, Proposition conclusion) {
-		Propositions premisses = new Propositions();
-		premisses.set(premisse);
-		this.premisses = premisses;
-		this.conclusion = conclusion;
+		this.premisses = new Propositions(premisse);
+		this.conclusion = conclusion.clone();
 	}
 
 	public Regle(Propositions premisses, Proposition conclusion) {
-		this.premisses = premisses;
-		this.conclusion = conclusion;
+		this.premisses = premisses.clone();
+		this.conclusion = conclusion.clone();
 	}
 
 	// accesseurs
@@ -41,7 +39,7 @@ public class Regle {
 	// operateur de sortie
 
 	public String toString() {
-		String res = "SI " + this.premisses + " ALORS " + this.conclusion;
+		String res = "SI " + this.premisses.toString(" && ") + " ALORS " + this.conclusion;
 		return res;
 	}
 }

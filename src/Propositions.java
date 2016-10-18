@@ -11,6 +11,21 @@ public class Propositions {
 		this.content = new HashMap<String, String>();
 	}
 
+	public Propositions(Proposition p) {
+		this();
+		this.set(p);
+	}
+
+	public Propositions(Propositions ps) {
+		this();
+		Iterator i = ps.content.keySet().iterator();
+		while (i.hasNext()) {
+			String variable = (String)i.next();
+			String valeur = ps.content.get(variable);
+			this.set(variable, valeur);
+		}
+	}
+
 	// autres
 
 	public void set(String variable, String valeur) {
@@ -49,9 +64,13 @@ public class Propositions {
 		return true;
 	}
 
+	public void clear() {
+		content.clear();
+	}
+
 	// operateur de sortie
 
-	public String toString() {
+	public String toString(String separateur) {
 		String res = "";
 
 		Iterator i = this.content.keySet().iterator();
@@ -62,10 +81,23 @@ public class Propositions {
 			res += this.content.get(variable);
 
 			if (i.hasNext()) {
-				res += "\n";
+				res += separateur;
 			}
 		}
 
+		return res;
+	}
+
+	// clone
+
+	public Propositions clone() {
+		Propositions res = new Propositions();
+		Iterator i = this.content.keySet().iterator();
+		while (i.hasNext()) {
+			String variable = (String)i.next();
+			String valeur = this.content.get(variable);
+			res.set(variable, valeur);
+		}
 		return res;
 	}
 }

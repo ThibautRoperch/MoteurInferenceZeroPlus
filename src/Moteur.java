@@ -37,7 +37,12 @@ public class Moteur {
 
 	// mutateurs
 
+	public void ajouter_regle(Propositions premisses, Proposition conclusion) {
+		this.ajouter_regle(new Regle(premisses, conclusion));
+	}
+
 	public void ajouter_regle(Regle r) {
+		System.out.println("ajout de la regle " + r);
 		this.base_de_regles.addElement(r);
 	}
 
@@ -74,7 +79,7 @@ public class Moteur {
 				for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
 					Regle r_valide = (Regle)regle_valide;
 					this.base_de_faits.set(r.get_conclusion()); // verifier que ce fait n'existe pas deja ?
-					// ôter la regle de l'ensemble de base_de_regles
+					this.base_de_regles.remove(r); // ôter la regle de l'ensemble de base_de_regles
 				}
 			}
 		}
@@ -91,7 +96,7 @@ public class Moteur {
 				for (Object regle_valide : regles_valides) { // choix d'une règle mise de côté et supprimer cette règle de la base de connaissances
 					Regle r_valide = (Regle)regle_valide;
 					this.base_de_faits.set(r.get_conclusion()); // verifier que ce fait n'existe pas deja ?
-					// ôter la regle de l'ensemble de base_de_regles
+					this.base_de_regles.remove(r); // ôter la regle de l'ensemble de base_de_regles
 					break;
 				}
 			}
@@ -111,11 +116,11 @@ public class Moteur {
 
 	// affichages
 
-	public void afficher_br() {
-		System.out.println(base_de_faits);
+	public void afficher_bf() {
+		System.out.println(base_de_faits.toString("\n"));
 	}
 
-	public void afficher_bf() {
+	public void afficher_br() {
 		for (Object regle : base_de_regles) {
 			Regle r = (Regle)regle;
 			System.out.println(r);
