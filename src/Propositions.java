@@ -46,6 +46,7 @@ public class Propositions {
 	}
 	
 	public boolean contains(String variable, String valeur) {
+		//System.out.println(variable + " = " + valeur);
 		if (valeur.equals("")) return this.content.containsKey(variable); 
 		return this.content.containsKey(variable) && this.content.get(variable) == valeur;
 	}

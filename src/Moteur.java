@@ -70,34 +70,42 @@ public class Moteur {
 
 	public void chainage_avant_largeur() {
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
+			Vector<Regle> regles_valides = new Vector<Regle>();
 			for (Object regle : this.base_de_regles) {
 				Regle r = (Regle)regle;
-				Vector<Regle> regles_valides = new Vector<Regle>();
-				if (this.base_de_faits.contains(r.get_premisses())) { // les premisses de la règle correspondent à des propositions de la base de fait
+				System.out.println("Regle en cours : " + r);
+				Propositions test = r.get_premisses();
+				System.out.println(test);
+				if (this.base_de_faits.contains(r.get_premisses())) { // test si les premisses de la règle correspondent à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la regle
-				}
-				for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
-					Regle r_valide = (Regle)regle_valide;
-					this.base_de_faits.set(r.get_conclusion()); // verifier que ce fait n'existe pas deja ?
 					this.base_de_regles.remove(r); // ôter la regle de l'ensemble de base_de_regles
 				}
+			}
+			System.out.println("----- OK -----");
+			for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
+				Regle r_valide = (Regle)regle_valide;
+				this.base_de_faits.set(r_valide.get_conclusion()); // verifier que ce fait n'existe pas deja ?
 			}
 		}
 	}
 
 	public void chainage_avant_profondeur() {
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
+			Vector<Regle> regles_valides = new Vector<Regle>();
 			for (Object regle : this.base_de_regles) {
 				Regle r = (Regle)regle;
-				Vector<Regle> regles_valides = new Vector<Regle>();
-				if (this.base_de_faits.contains(r.get_premisses())) { // les premisses de la règle correspondent à des propositions de la base de fait
+				if (this.base_de_faits.contains(r.get_premisses())) { // test si les premisses de la règle correspondent à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la regle
-				}
-				for (Object regle_valide : regles_valides) { // choix d'une règle mise de côté et supprimer cette règle de la base de connaissances
-					Regle r_valide = (Regle)regle_valide;
-					this.base_de_faits.set(r.get_conclusion()); // verifier que ce fait n'existe pas deja ?
 					this.base_de_regles.remove(r); // ôter la regle de l'ensemble de base_de_regles
-					break;
+				}
+			}
+			Regle regle_a_utiliser = regles_valides.get(0);
+			for (Object regle_valide : regles_valides) { // choix d'une règle mise de côté et supprimer cette règle de la base de connaissances, remettre les autres dans la base de regles
+				Regle r_valide = (Regle)regle_valide;
+				if (r_valide == regle_a_utiliser) {
+					this.base_de_faits.set(r_valide.get_conclusion()); // verifier que ce fait n'existe pas deja ?
+				} else {
+					this.base_de_regles.addElement(r_valide);
 				}
 			}
 		}

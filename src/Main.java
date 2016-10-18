@@ -5,7 +5,6 @@ public class Main {
 	public static void main(String[] args) {
 		Moteur m = new Moteur();
 
-
 		String fichier = "base_de_regles.txt";
 		
 		// lecture du fichier texte	

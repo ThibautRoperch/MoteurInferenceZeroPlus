@@ -7,7 +7,7 @@ public class Regle {
 	// constructeurs
 
 	public Regle(Proposition premisse, Proposition conclusion) {
-		this.premisses = new Propositions(premisse);
+		this.premisses = new Propositions(premisse.clone());
 		this.conclusion = conclusion.clone();
 	}
 
@@ -19,7 +19,8 @@ public class Regle {
 	// accesseurs
 
 	public Propositions get_premisses() {
-		return this.premisses;
+		return new Propositions(this.premisses);
+		//return this.premisses;
 	}
 
 	public Proposition get_conclusion() {
