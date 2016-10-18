@@ -42,7 +42,6 @@ public class Moteur {
 	}
 
 	public void ajouter_regle(Regle r) {
-		System.out.println("ajout de la regle " + r);
 		this.base_de_regles.addElement(r);
 	}
 
@@ -66,37 +65,53 @@ public class Moteur {
 		this.but = but;
 	}
 
+	// gestion de la cohérence
+
+	public boolean regles_coherentes() {
+		// ?
+		return true;
+	}
+
 	// algorithmes d'exploitation
 
-	public void chainage_avant_largeur() {
+	public String chainage_avant_largeur() {
+		String trace = "";
+		int etape = 0;
+
+		// Lire les règles tant que la base de fait ne contient pas le tpye de but recherché et qu'il y a des règles encore non utilisées
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
+			// Mettre de côté les règles valides (celles qui ont leur(s) prémisse(s) en commun avec la base de faits)
 			Vector<Regle> regles_valides = new Vector<Regle>();
 			for (Object regle : this.base_de_regles) {
 				Regle r = (Regle)regle;
-				System.out.println("Regle en cours : " + r);
-				Propositions test = r.get_premisses();
-				System.out.println(test);
 				if (this.base_de_faits.contains(r.get_premisses())) { // test si les premisses de la règle correspondent à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la regle
-					this.base_de_regles.remove(r); // ôter la regle de l'ensemble de base_de_regles
 				}
 			}
-			System.out.println("----- OK -----");
+			// Ajouter à la base de fait les conclusion des règles mises de côté et les supprimer de la base de règle
 			for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
 				Regle r_valide = (Regle)regle_valide;
 				this.base_de_faits.set(r_valide.get_conclusion()); // verifier que ce fait n'existe pas deja ?
+				// attention, vu qu'on remove la regle, la valeur get_conclusion et peut etre remove aussi
+				this.base_de_regles.remove(r_valide); // ôter la regle de l'ensemble de base_de_regles
 			}
+			trace += "\n==     ETAPE " + ++etape + "     ==\n";
+			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
+			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
 		}
+
+		return trace;
 	}
 
-	public void chainage_avant_profondeur() {
+	public String chainage_avant_profondeur() {
+		String trace = "";
+
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
 			Vector<Regle> regles_valides = new Vector<Regle>();
 			for (Object regle : this.base_de_regles) {
 				Regle r = (Regle)regle;
 				if (this.base_de_faits.contains(r.get_premisses())) { // test si les premisses de la règle correspondent à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la regle
-					this.base_de_regles.remove(r); // ôter la regle de l'ensemble de base_de_regles
 				}
 			}
 			Regle regle_a_utiliser = regles_valides.get(0);
@@ -104,14 +119,19 @@ public class Moteur {
 				Regle r_valide = (Regle)regle_valide;
 				if (r_valide == regle_a_utiliser) {
 					this.base_de_faits.set(r_valide.get_conclusion()); // verifier que ce fait n'existe pas deja ?
-				} else {
-					this.base_de_regles.addElement(r_valide);
+					// attention, vu qu'on remove la regle, la valeur get_conclusion et peut etre remove aussi
+					this.base_de_regles.remove(r_valide); // ôter la regle de l'ensemble de base_de_regles
 				}
+				break;
 			}
 		}
+
+		return trace;
 	}
 
-	public void chainage_arriere() {
+	public String chainage_arriere() {
+		String trace = "";
+
 		while (true) {
 			for (Object regle : this.base_de_regles) {
 				Regle r = (Regle)regle;
@@ -119,25 +139,30 @@ public class Moteur {
 					this.base_de_faits.set(r.get_premisses()); // verifier qu'il n'existe pas deja ?
 				}
 			}
+			if (true) break;
 		}
+
+		return trace;
 	}
 
 	// affichages
 
-	public void afficher_bf() {
-		System.out.println(base_de_faits.toString("\n"));
+	public String bf_toString() {
+		return base_de_faits.toString("\n");
 	}
 
-	public void afficher_br() {
+	public String br_toString() {
+		String res = "";
 		for (Object regle : base_de_regles) {
 			Regle r = (Regle)regle;
-			System.out.println(r);
+			res += r + "\n";
 		}
+		return res;
 	}
 
 	// main de test
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Moteur m = new Moteur();
 
 		// Création des règles et ajout à la base de règles
@@ -166,5 +191,5 @@ public class Moteur {
 
 		System.out.println("\n=== BF APRES ===");
 		m.afficher_bf();
-	}
+	}*/
 }

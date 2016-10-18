@@ -7,7 +7,7 @@ public class Main {
 
 		String fichier = "base_de_regles.txt";
 		
-		// lecture du fichier texte	
+		// lecture du fichier texte
 		try {
 			InputStream ips = new FileInputStream(fichier); 
 			InputStreamReader ipsr = new InputStreamReader(ips);
@@ -44,38 +44,38 @@ public class Main {
 		}
 
 
-		System.out.println("\n=== Base de Règles ===");
-		m.afficher_br();
+		System.out.println("\n=== Base de Règles ===\n" + m.br_toString());
 
 		String strategie = "1";
+		String trace = "";
+		boolean tracer = true;
 		switch (strategie) {
 			case "1":
 				m.ajouter_fait("action", "glisser");
 				m.ajouter_fait("environnement", "neige");
-				System.out.println("\n=== Base de Faits AVANT ===");
-				m.afficher_bf();
-				m.chainage_avant_largeur();
+				m.set_but("sport");
+				System.out.println("\n=== Base de Faits ===\n" + m.bf_toString());
+				trace = m.chainage_avant_largeur();
 				break;
 
 			case "2":
 				m.ajouter_fait("action", "glisser");
 				m.ajouter_fait("environnement", "neige");
-				System.out.println("\n=== Base de Faits AVANT ===");
-				m.afficher_bf();
-				m.chainage_avant_profondeur();
+				System.out.println("\n=== Base de Faits ===\n" + m.bf_toString());
+				trace = m.chainage_avant_profondeur();
 				break;
 
 			case "3":
-				System.out.println("\n=== Base de Faits AVANT ===");
-				m.afficher_bf();
-				m.chainage_arriere();
+				System.out.println("\n=== Base de Faits ===\n" + m.bf_toString());
+				trace = m.chainage_arriere();
 				break;
 				
 			default:
 				break;
 		}
 
-		System.out.println("\n=== Base de Faits APRES ===");
-		m.afficher_bf();
+		if (tracer) System.out.println(trace);
+		/*System.out.println("\n=== Base de Faits ===\n" + m.bf_toString());
+		System.out.println("\n=== Base de Règles ===\n" + m.br_toString());*/
 	}
 }
