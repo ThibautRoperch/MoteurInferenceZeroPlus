@@ -55,7 +55,6 @@ public class Propositions {
 	}
 
 	public boolean contains(Propositions ps) {
-		System.out.println("TEST DE " + ps.toString(" ET "));
 		Iterator i = ps.content.keySet().iterator();
 		while (i.hasNext()) {
 			String variable = (String)i.next();
@@ -63,6 +62,10 @@ public class Propositions {
 			if (!this.contains(variable, valeur)) return false;
 		}
 		return true;
+	}
+
+	public boolean conflit(Proposition p) {
+		return this.content.containsKey(p.get_variable()) && !this.content.get(p.get_variable()).equals(p.get_valeur());
 	}
 
 	public void clear() {

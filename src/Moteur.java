@@ -77,27 +77,40 @@ public class Moteur {
 	public String chainage_avant_largeur() {
 		String trace = "";
 		int etape = 0;
+		int etape_max = this.base_de_regles.size();
 
-		// Lire les règles tant que la base de fait ne contient pas le tpye de but recherché et qu'il y a des règles encore non utilisées
+		// Lire les règles tant que la base de fait ne contient pas le type de but recherché et qu'il y a des règles encore non utilisées
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
+			trace += "\n==     ETAPE " + ++etape + "     ==\n\n";
+
 			// Mettre de côté les règles valides (celles qui ont leur(s) prémisse(s) en commun avec la base de faits)
 			Vector<Regle> regles_valides = new Vector<Regle>();
 			for (Object regle : this.base_de_regles) {
 				Regle r = (Regle)regle;
 				if (this.base_de_faits.contains(r.get_premisses())) { // test si les premisses de la règle correspondent à des propositions de la base de fait
-					regles_valides.addElement(r); // mettre de coté la regle
+					regles_valides.addElement(r); // mettre de coté la règle
 				}
 			}
-			// Ajouter à la base de fait les conclusion des règles mises de côté et les supprimer de la base de règle
+			// Ajouter à la base de fait la conclusion des règles mises de côté et les supprimer de la base de règle
 			for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
 				Regle r_valide = (Regle)regle_valide;
-				this.base_de_faits.set(r_valide.get_conclusion()); // verifier que ce fait n'existe pas deja ?
-				// attention, vu qu'on remove la regle, la valeur get_conclusion et peut etre remove aussi
-				this.base_de_regles.remove(r_valide); // ôter la regle de l'ensemble de base_de_regles
+				if (this.base_de_faits.conflit(r_valide.get_conclusion())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
+					trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
+					trace += "Erreur : " + r_valide + "\n";
+					return trace;
+				}
+				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
+				this.base_de_faits.set(r_valide.get_conclusion());
+				trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_valide + ", ôtée de la base de règles\nAjout du fait " + r_valide.get_conclusion() + " à la base de faits\n\n";
 			}
-			trace += "\n==     ETAPE " + ++etape + "     ==\n";
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
 			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
+
+			if (etape > etape_max) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
+				return trace;
+			}
 		}
 
 		return trace;
@@ -105,24 +118,42 @@ public class Moteur {
 
 	public String chainage_avant_profondeur() {
 		String trace = "";
-
+		int etape = 0;
+		int etape_max = this.base_de_regles.size();
+		
+		// Lire les règles tant que la base de fait ne contient pas le type de but recherché et qu'il y a des règles encore non utilisées
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
+			trace += "\n==     ETAPE " + ++etape + "     ==\n\n";
+
+			// Mettre de côté les règles valides (celles qui ont leur(s) prémisse(s) en commun avec la base de faits)
 			Vector<Regle> regles_valides = new Vector<Regle>();
 			for (Object regle : this.base_de_regles) {
 				Regle r = (Regle)regle;
 				if (this.base_de_faits.contains(r.get_premisses())) { // test si les premisses de la règle correspondent à des propositions de la base de fait
-					regles_valides.addElement(r); // mettre de coté la regle
+					regles_valides.addElement(r); // mettre de coté la règle
 				}
 			}
-			Regle regle_a_utiliser = regles_valides.get(0);
-			for (Object regle_valide : regles_valides) { // choix d'une règle mise de côté et supprimer cette règle de la base de connaissances, remettre les autres dans la base de regles
+			// Définir la façon dont la règle à appliquer sera choisie
+			// Ajouter à la base de faits la conclusion de la règle mise de côté et choisie, et la supprimer de la base de règles
+			for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
 				Regle r_valide = (Regle)regle_valide;
-				if (r_valide == regle_a_utiliser) {
-					this.base_de_faits.set(r_valide.get_conclusion()); // verifier que ce fait n'existe pas deja ?
-					// attention, vu qu'on remove la regle, la valeur get_conclusion et peut etre remove aussi
-					this.base_de_regles.remove(r_valide); // ôter la regle de l'ensemble de base_de_regles
+				if (this.base_de_faits.conflit(r_valide.get_conclusion())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
+					trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
+					trace += "Erreur : " + r_valide + "\n";
+					return trace;
 				}
+				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
+				this.base_de_faits.set(r_valide.get_conclusion());
+				trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_valide + ", ôtée de la base de règles\nAjout du fait " + r_valide.get_conclusion() + " à la base de faits\n\n";
 				break;
+			}
+			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
+			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
+
+			if (etape > etape_max) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
+				return trace;
 			}
 		}
 

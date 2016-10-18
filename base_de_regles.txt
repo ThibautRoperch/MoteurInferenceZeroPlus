@@ -54,11 +54,11 @@ sport=football
 
 SI
 environnement=eau
-ALORS
-sport=natation
-
-SI
-environnement=eau
 accessoire=ballon
 ALORS
 sport=water_polo
+
+SI
+environnement=eau
+ALORS
+sport=natation

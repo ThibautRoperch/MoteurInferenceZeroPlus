@@ -57,8 +57,8 @@ SI action = grimper ALORS environnement = salle
 SI environnement = salle ET accessoire = ballon ALORS sport = volley_ball
 SI environnement = terrain ALORS sport = athlétisme
 SI environnement = terrain ET accessoire = ballon ALORS sport = football
-SI environnement = eau ALORS sport = natation
 SI environnement = eau ET accessoire = ballon ALORS sport = water_polo
+SI environnement = eau ALORS sport = natation
 
 //////
 // BASE DE FAITS (BF)
