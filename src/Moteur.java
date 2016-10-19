@@ -78,7 +78,7 @@ public class Moteur {
 		String trace = "";
 		int etape = 0;
 
-		// Lire les règles tant que la base de fait ne contient pas le type de but recherché et qu'il y a des règles encore non utilisées
+		// Lire les règles tant que la base de faits ne contient pas le type de but recherché et qu'il y a des règles encore non utilisées
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
 			trace += "\n==     ETAPE " + ++etape + "     ==\n\n";
 
@@ -90,12 +90,12 @@ public class Moteur {
 					regles_valides.addElement(r); // mettre de coté la règle
 				}
 			}
-			// Ajouter à la base de fait la conclusion des règles mises de côté et les supprimer de la base de règle
+			// Ajouter à la base de faits la conclusion des règles mises de côté et les supprimer de la base de règle
 			for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
 				Regle r_valide = (Regle)regle_valide;
 				if (this.base_de_faits.conflit(r_valide.get_conclusion())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
 					trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
-					trace += "Erreur : " + r_valide + "\n";
+					trace += "Erreur : base de connaissances inconsistante : " + r_valide + "\n";
 					return trace;
 				}
 				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
@@ -119,7 +119,7 @@ public class Moteur {
 		String trace = "";
 		int etape = 0;
 		
-		// Lire les règles tant que la base de fait ne contient pas le type de but recherché et qu'il y a des règles encore non utilisées
+		// Lire les règles tant que la base de faits ne contient pas le type de but recherché et qu'il y a des règles encore non utilisées
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
 			trace += "\n==     ETAPE " + ++etape + "     ==\n\n";
 
@@ -137,7 +137,7 @@ public class Moteur {
 				Regle r_valide = (Regle)regle_valide;
 				if (this.base_de_faits.conflit(r_valide.get_conclusion())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
 					trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
-					trace += "Erreur : " + r_valide + "\n";
+					trace += "Erreur : base de connaissances inconsistante : " + r_valide + "\n";
 					return trace;
 				}
 				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
@@ -162,7 +162,7 @@ public class Moteur {
 		String trace = "";
 		int etape = 0;
 
-		// Lire les règles tant que la base de fait ne contient pas le but recherché et qu'il y a des règles encore non utilisées
+		// Lire les règles tant que la base de faits ne contient pas le but recherché et qu'il y a des règles encore non utilisées
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
 			trace += "\n==     ETAPE " + ++etape + "     ==\n\n";
 
@@ -177,12 +177,11 @@ public class Moteur {
 					regles_valides.addElement(r); // mettre de coté la règle
 				}
 			}
-			// Ajouter à la base de fait les prémisses des règles mises de côté et les supprimer de la base de règle
+			// Ajouter à la base de faits les prémisses des règles mises de côté et les supprimer de la base de règle
 			for (Object regle_valide : regles_valides) { // ajoute les prémisses de chaque regle mise de côté et supprimer cette règle de la base de connaissances
 				Regle r_valide = (Regle)regle_valide;
 				if (this.base_de_faits.conflit(r_valide.get_premisses())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
 					trace += "\nAttention : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
-					trace += "Attention : " + r_valide + "\n";
 					// resoudre le conflit en choisissant la valeur à garder dans la base de faits
 					trace += "Attention : la nouvelle règle a la priorité sur l'ancienne, la(les) valeur(s) gardée(s) est(sont) " + r_valide.get_premisses().toString(", ") + "\n";
 				}
