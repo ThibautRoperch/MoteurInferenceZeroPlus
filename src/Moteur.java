@@ -16,9 +16,10 @@ public class Moteur {
 	}
 
 	public Moteur(Vector<Regle> br, Propositions bf, Proposition but) {
-		this.base_de_regles = br;
-		this.base_de_faits = bf;
-		this.but = but;
+		this.base_de_regles = new Vector<Regle>();
+		for (Object r : br) this.base_de_regles.addElement((Regle)r);
+		this.base_de_faits = bf.clone();
+		this.but = but.clone();
 	}
 
 	// accesseurs

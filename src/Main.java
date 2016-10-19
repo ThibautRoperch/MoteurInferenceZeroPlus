@@ -43,6 +43,8 @@ public class Main {
 			System.out.println(e.toString());
 		}
 
+		System.out.println(m);
+
 		String strategie = "4";
 		String trace = "Stratégie inexistante, impossible de lancer le moteur";
 		boolean tracer = true;
