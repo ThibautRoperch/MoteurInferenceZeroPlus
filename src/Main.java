@@ -45,7 +45,7 @@ public class Main {
 
 		//System.out.println(m);
 
-		String strategie = "4";
+		String strategie = "avant_largeur";
 		String trace = "Stratégie inexistante, impossible de lancer le moteur";
 		boolean tracer = true;
 		switch (strategie) {
