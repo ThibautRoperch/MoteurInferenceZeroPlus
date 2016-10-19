@@ -40,7 +40,7 @@ public class Propositions {
 		Iterator i = ps.content.keySet().iterator();
 		while (i.hasNext()) {
 			String variable = (String)i.next();
-			String valeur = this.content.get(variable);
+			String valeur = ps.content.get(variable);
 			this.set(variable, valeur);
 		}
 	}
@@ -64,8 +64,22 @@ public class Propositions {
 		return true;
 	}
 
+	public boolean conflit(String variable, String valeur) {
+		return this.content.containsKey(variable) && !this.content.get(variable).equals(valeur);
+	}
+
 	public boolean conflit(Proposition p) {
-		return this.content.containsKey(p.get_variable()) && !this.content.get(p.get_variable()).equals(p.get_valeur());
+		return this.conflit(p.get_variable(), p.get_valeur());
+	}
+
+	public boolean conflit(Propositions ps) {
+		Iterator i = ps.content.keySet().iterator();
+		while (i.hasNext()) {
+			String variable = (String)i.next();
+			String valeur = ps.content.get(variable);
+			if (!this.conflit(variable, valeur)) return false;
+		}
+		return true;
 	}
 
 	public void clear() {

@@ -59,6 +59,7 @@ SI environnement = terrain ALORS sport = athlétisme
 SI environnement = terrain ET accessoire = ballon ALORS sport = football
 SI environnement = eau ET accessoire = ballon ALORS sport = water_polo
 SI environnement = eau ALORS sport = natation
+SI environnement = salle ET action = combattre ALORS sport = judo
 
 //////
 // BASE DE FAITS (BF)

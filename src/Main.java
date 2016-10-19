@@ -43,38 +43,40 @@ public class Main {
 			System.out.println(e.toString());
 		}
 
-
-		//System.out.println("\n=== Base de Règles ===\n" + m.br_toString());
-
-		String strategie = "2";
-		String trace = "";
+		String strategie = "4";
+		String trace = "Stratégie inexistante, impossible de lancer le moteur";
 		boolean tracer = true;
 		switch (strategie) {
 			case "1":
 				m.ajouter_fait("action", "nager");
 				m.set_but("sport");
-				//System.out.println("\n=== Base de Faits ===\n" + m.bf_toString());
+				//System.out.println(m);
 				trace = m.chainage_avant_largeur();
 				break;
 
 			case "2":
 				m.ajouter_fait("action", "nager");
 				m.set_but("sport");
-				//System.out.println("\n=== Base de Faits ===\n" + m.bf_toString());
+				//System.out.println(m);
 				trace = m.chainage_avant_profondeur();
 				break;
 
 			case "3":
-				System.out.println("\n=== Base de Faits ===\n" + m.bf_toString());
+				m.set_but("sport", "judo");
+				//System.out.println(m);
 				trace = m.chainage_arriere();
 				break;
-				
+
+			case "4":
+				//System.out.println(m);
+				trace = m.chainage_mixte();
+				break;
+
 			default:
 				break;
 		}
 
 		if (tracer) System.out.println(trace);
-		/*System.out.println("\n=== Base de Faits ===\n" + m.bf_toString());
-		System.out.println("\n=== Base de Règles ===\n" + m.br_toString());*/
+		//System.out.println(m);
 	}
 }

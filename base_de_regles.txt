@@ -62,3 +62,9 @@ SI
 environnement=eau
 ALORS
 sport=natation
+
+SI
+environnement=salle
+action=combattre
+ALORS
+sport=judo

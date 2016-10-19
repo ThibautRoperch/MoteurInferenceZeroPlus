@@ -8,6 +8,10 @@ launch:
 	@echo "# Execution de la classe Main"
 	java -cp bin Main
 
+calculatrice:
+	@echo "# Execution de la classe calculatric.Main"
+	java -cp bin calculatrice.Main
+
 clean:
 	@echo "# Nettoyage du dossier bin"
-	rm bin/*
+	rm -R bin/*
