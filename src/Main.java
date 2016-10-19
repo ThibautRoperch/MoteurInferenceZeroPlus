@@ -43,33 +43,33 @@ public class Main {
 			System.out.println(e.toString());
 		}
 
-		System.out.println(m);
+		//System.out.println(m);
 
 		String strategie = "4";
 		String trace = "Stratégie inexistante, impossible de lancer le moteur";
 		boolean tracer = true;
 		switch (strategie) {
-			case "1":
+			case "avant_largeur":
 				m.ajouter_fait("action", "nager");
 				m.set_but("sport");
 				//System.out.println(m);
 				trace = m.chainage_avant_largeur();
 				break;
 
-			case "2":
+			case "avant_profondeur":
 				m.ajouter_fait("action", "nager");
 				m.set_but("sport");
 				//System.out.println(m);
 				trace = m.chainage_avant_profondeur();
 				break;
 
-			case "3":
+			case "arriere":
 				m.set_but("sport", "judo");
 				//System.out.println(m);
-				trace = m.chainage_arriere();
+				trace = m.chainage_arriere("premiere");
 				break;
 
-			case "4":
+			case "mixte":
 				//System.out.println(m);
 				trace = m.chainage_mixte();
 				break;

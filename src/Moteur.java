@@ -99,8 +99,8 @@ public class Moteur {
 					trace += "Erreur : base de connaissances inconsistante : " + r_valide + "\n";
 					return trace;
 				}
-				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
 				this.base_de_faits.set(r_valide.get_conclusion());
+				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
 				trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_valide + ", ôtée de la base de règles\nAjout du fait " + r_valide.get_conclusion() + " à la base de faits\n\n";
 			}
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
@@ -141,8 +141,8 @@ public class Moteur {
 					trace += "Erreur : base de connaissances inconsistante : " + r_valide + "\n";
 					return trace;
 				}
-				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
 				this.base_de_faits.set(r_valide.get_conclusion());
+				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
 				trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_valide + ", ôtée de la base de règles\nAjout du fait " + r_valide.get_conclusion() + " à la base de faits\n\n";
 				break;
 			}
@@ -159,7 +159,7 @@ public class Moteur {
 		return trace;
 	}
 
-	public String chainage_arriere() {
+	public String chainage_arriere(String strategie_conflit) {
 		String trace = "";
 		int etape = 0;
 
@@ -183,12 +183,25 @@ public class Moteur {
 				Regle r_valide = (Regle)regle_valide;
 				if (this.base_de_faits.conflit(r_valide.get_premisses())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
 					trace += "\nAttention : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
-					// resoudre le conflit en choisissant la valeur à garder dans la base de faits
-					trace += "Attention : la nouvelle règle a la priorité sur l'ancienne, la(les) valeur(s) gardée(s) est(sont) " + r_valide.get_premisses().toString(", ") + "\n";
+					switch (strategie_conflit) { // resoudre le conflit en choisissant la valeur à garder dans la base de faits
+						case "premiere":
+							trace += "Attention : la nouvelle règle a la priorité sur l'ancienne, la(les) valeur(s) gardée(s) est(sont) " + r_valide.get_premisses().toString(", ") + "\n";
+							this.base_de_faits.set(r_valide.get_premisses());
+							trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_valide + ", ôtée de la base de règles\nAjout du(des) fait(s) " + r_valide.get_premisses().toString(", ") + " à la base de faits\n\n";
+							break;
+
+						case "precise":
+							// if regle a plus de premisses que....?
+							break;
+
+						case "recente":
+							break;
+
+						default:
+							break;
+					}
 				}
 				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
-				this.base_de_faits.set(r_valide.get_premisses());
-				trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_valide + ", ôtée de la base de règles\nAjout du(des) fait(s) " + r_valide.get_premisses().toString(", ") + " à la base de faits\n\n";
 			}
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
 			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
