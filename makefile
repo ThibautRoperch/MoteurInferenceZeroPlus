@@ -8,10 +8,6 @@ launch:
 	@echo "# Execution de la classe Main"
 	java -cp bin Main
 
-calculatrice:
-	@echo "# Execution de la classe calculatric.Main"
-	java -cp bin calculatrice.Main
-
 interface:
 	@echo "# Execution de la classe Interface"
 	java -cp bin Interface

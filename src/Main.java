@@ -5,7 +5,7 @@ public class Main {
 	public static void main(String[] args) {
 		Moteur m = new Moteur();
 
-		String fichier = "base_chainage_arriere.txt";
+		String fichier = "base_connaissances.txt";
 		
 		// lecture du fichier texte
 		try {
@@ -64,29 +64,25 @@ public class Main {
 			System.out.println(e.toString());
 		}
 
-		//System.out.println(m);
+		System.out.println(m);
 
-		String strategie = "Arriere";
+		String strategie = "avant largeur";
 		String trace = "Stratégie inexistante, impossible de lancer le moteur";
 		boolean tracer = true;
+		System.out.println("Chainage " + strategie);
 		switch (strategie) {
-			case "Avant largeur":
-				//System.out.println(m);
+			case "avant largeur":
 				trace = m.chainage_avant_largeur();
 				break;
 
-			case "Avant profondeur":
-				//System.out.println(m);
+			case "avant profondeur":
 				trace = m.chainage_avant_profondeur("premiere");
 				break;
 
-			case "Arriere":
-				//System.out.println(m);
-				trace = m.chainage_arriere("premiere");
+			case "arriere":
 				break;
 
-			case "Mixte":
-				//System.out.println(m);
+			case "mixte":
 				trace = m.chainage_mixte();
 				break;
 

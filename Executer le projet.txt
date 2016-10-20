@@ -1,0 +1,7 @@
+
+Se placer dans le dossier racine du projet
+Executer les commandes suivantes
+
+make
+make launch                 pour lancer le programme en console
+make interface              pour lancer le programme en interface graphique
