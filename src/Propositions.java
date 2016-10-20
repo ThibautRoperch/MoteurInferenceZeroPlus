@@ -26,7 +26,13 @@ public class Propositions {
 		}
 	}
 
-	// autres
+	// accesseurs
+
+	public int getSize() {
+		return this.content.size();
+	}
+
+	// mutateurs
 
 	public void set(String variable, String valeur) {
 		this.content.put(variable, valeur);
@@ -44,6 +50,8 @@ public class Propositions {
 			this.set(variable, valeur);
 		}
 	}
+
+	// autres
 	
 	public boolean contains(String variable, String valeur) {
 		if (valeur.equals("")) return this.content.containsKey(variable); 

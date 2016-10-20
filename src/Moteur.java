@@ -116,7 +116,7 @@ public class Moteur {
 		return trace;
 	}
 
-	public String chainage_avant_profondeur() {
+	public String chainage_avant_profondeur(String strategie_conflit) {
 		String trace = "";
 		int etape = 0;
 		
@@ -133,19 +133,41 @@ public class Moteur {
 				}
 			}
 			// Définir la façon dont la règle à appliquer sera choisie
-			// Ajouter à la base de faits la conclusion de la règle mise de côté et choisie, et la supprimer de la base de règles
-			for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
-				Regle r_valide = (Regle)regle_valide;
-				if (this.base_de_faits.conflit(r_valide.get_conclusion())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
-					trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
-					trace += "Erreur : base de connaissances inconsistante : " + r_valide + "\n";
-					return trace;
-				}
-				this.base_de_faits.set(r_valide.get_conclusion());
-				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
-				trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_valide + ", ôtée de la base de règles\nAjout du fait " + r_valide.get_conclusion() + " à la base de faits\n\n";
-				break;
+			Regle r_choisie = new Regle();
+			switch (strategie_conflit) { // resoudre le conflit en choisissant la règle à appliquer
+				case "premiere":
+					r_choisie = regles_valides.firstElement();
+					break;
+
+				case "precise":
+					int max_premisses = 0;
+					for (Object regle_valide : regles_valides) {
+						Regle r_valide = (Regle)regle_valide;
+						if (r_valide.get_premisses().getSize() > max_premisses) {
+							r_choisie = r_valide;
+							max_premisses = r_valide.get_premisses().getSize();
+						}
+					}
+					break;
+
+				case "recente":
+					r_choisie = regles_valides.lastElement();
+					break;
+
+				default:
+					trace += "\nErreur : impossible de choisir une règle, vérifier la stratégie de résolution des conflits\n";
+					trace += "Erreur : stratégie de résolution de conflit inexistante : " + strategie_conflit + "\n";
+					break;
 			}
+			// Ajouter à la base de faits la conclusion de la règle mise de côté et choisie, et la supprimer de la base de règles
+			if (this.base_de_faits.conflit(r_choisie.get_conclusion())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
+				trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
+				trace += "Erreur : base de connaissances inconsistante : " + r_choisie + "\n";
+				return trace;
+			}
+			this.base_de_faits.set(r_choisie.get_conclusion());
+			this.base_de_regles.remove(r_choisie); // ôter la règle de la base de règles
+			trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_choisie + ", ôtée de la base de règles\nAjout du fait " + r_choisie.get_conclusion() + " à la base de faits\n\n";
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
 			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
 
@@ -178,31 +200,42 @@ public class Moteur {
 					regles_valides.addElement(r); // mettre de coté la règle
 				}
 			}
-			// Ajouter à la base de faits les prémisses des règles mises de côté et les supprimer de la base de règle
-			for (Object regle_valide : regles_valides) { // ajoute les prémisses de chaque regle mise de côté et supprimer cette règle de la base de connaissances
-				Regle r_valide = (Regle)regle_valide;
-				if (this.base_de_faits.conflit(r_valide.get_premisses())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
-					trace += "\nAttention : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
-					switch (strategie_conflit) { // resoudre le conflit en choisissant la valeur à garder dans la base de faits
-						case "premiere":
-							trace += "Attention : la nouvelle règle a la priorité sur l'ancienne, la(les) valeur(s) gardée(s) est(sont) " + r_valide.get_premisses().toString(", ") + "\n";
-							this.base_de_faits.set(r_valide.get_premisses());
-							trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_valide + ", ôtée de la base de règles\nAjout du(des) fait(s) " + r_valide.get_premisses().toString(", ") + " à la base de faits\n\n";
-							break;
+			// Définir la façon dont la règle à appliquer sera choisie
+			Regle r_choisie = new Regle();
+			switch (strategie_conflit) { // resoudre le conflit en choisissant la règle à appliquer
+				case "premiere":
+					r_choisie = regles_valides.firstElement();
+					break;
 
-						case "precise":
-							// if regle a plus de premisses que....?
-							break;
-
-						case "recente":
-							break;
-
-						default:
-							break;
+				case "precise":
+					int max_premisses = 0;
+					for (Object regle_valide : regles_valides) {
+						Regle r_valide = (Regle)regle_valide;
+						if (r_valide.get_premisses().getSize() > max_premisses) {
+							r_choisie = r_valide;
+							max_premisses = r_valide.get_premisses().getSize();
+						}
 					}
-				}
-				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
+					break;
+
+				case "recente":
+					r_choisie = regles_valides.lastElement();
+					break;
+
+				default:
+					trace += "\nErreur : impossible de choisir une règle, vérifier la stratégie de résolution des conflits\n";
+					trace += "Erreur : stratégie de résolution de conflit inexistante : " + strategie_conflit + "\n";
+					break;
 			}
+			// Ajouter à la base de faits les prémisses de la règle mise de côté choisie et la supprimer de la base de règle
+			if (this.base_de_faits.conflit(r_choisie.get_premisses())) { // verifier que ce(s) type(s) de fait(s) n'existe(nt) pas deja dans la base de faits avec une valeur différente
+				trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
+				trace += "Erreur : base de connaissances inconsistante : " + r_choisie + "\n";
+				return trace;
+			}
+			this.base_de_faits.set(r_choisie.get_premisses());
+			this.base_de_regles.remove(r_choisie); // ôter la règle de la base de règles
+			trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_choisie + ", ôtée de la base de règles\nAjout du(des) fait(s) " + r_choisie.get_premisses().toString(", ") + " à la base de faits\n\n";
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
 			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
 

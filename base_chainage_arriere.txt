@@ -1,3 +1,5 @@
+#REGLES
+
 SI
 action=nager
 ALORS
@@ -67,4 +69,8 @@ SI
 environnement=salle
 action=combattre
 ALORS
+sport=judo
+
+#BUT
+
 sport=judo

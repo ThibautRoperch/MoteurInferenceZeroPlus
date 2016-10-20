@@ -12,6 +12,10 @@ calculatrice:
 	@echo "# Execution de la classe calculatric.Main"
 	java -cp bin calculatrice.Main
 
+interface:
+	@echo "# Execution de la classe Interface"
+	java -cp bin Interface
+
 clean:
 	@echo "# Nettoyage du dossier bin"
 	rm -R bin/*

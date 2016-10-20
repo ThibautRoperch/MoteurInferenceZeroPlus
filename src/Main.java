@@ -5,7 +5,7 @@ public class Main {
 	public static void main(String[] args) {
 		Moteur m = new Moteur();
 
-		String fichier = "base_de_regles.txt";
+		String fichier = "base_chainage_arriere.txt";
 		
 		// lecture du fichier texte
 		try {
@@ -16,24 +16,45 @@ public class Main {
 			Propositions premisses = new Propositions();
 			Proposition conclusion = new Proposition();
 			boolean lire_fichier = ((ligne = br.readLine()) != null) ? true : false;
+			String declaration_section = new String();
 			while (lire_fichier) {
-				while (ligne.equals("")) ligne = br.readLine();
-				if (ligne.equals("SI")) {
+				if (ligne.contains("#")) {
+					declaration_section = ligne.substring(1);
 					ligne = br.readLine();
-					while (!ligne.equals("ALORS") && !ligne.equals("") && ligne != null) {
-						String proposition[] = ligne.split("=");
-						premisses.set(proposition[0], proposition[1]);
+				}
+				while (ligne.equals("")) ligne = br.readLine();
+				if (declaration_section.equals("REGLES")) {
+					if (ligne.equals("SI")) {
 						ligne = br.readLine();
+						while (!ligne.equals("ALORS") && !ligne.equals("")) {
+							String proposition[] = ligne.split("=");
+							premisses.set(proposition[0], proposition[1]);
+							ligne = br.readLine();
+						}
+						if (ligne.equals("ALORS")) {
+							ligne = br.readLine();
+							String proposition[] = ligne.split("=");
+							conclusion.set_variable(proposition[0]);
+							conclusion.set_valeur(proposition[1]);
+							ligne = br.readLine();
+						}
+						m.ajouter_regle(premisses, conclusion);
+						premisses.clear();
 					}
-					if (ligne.equals("ALORS")) {
-						ligne = br.readLine();
+				} else if (declaration_section.equals("FAITS")) {
+					if (ligne.contains("=")) {
 						String proposition[] = ligne.split("=");
-						conclusion.set_variable(proposition[0]);
-						conclusion.set_valeur(proposition[1]);
+						m.ajouter_fait(proposition[0], proposition[1]);
 						ligne = br.readLine();
+					}					
+				} else if (declaration_section.equals("BUT")) {
+					if (ligne.contains("=")) {
+						String proposition[] = ligne.split("=");
+						m.set_but(proposition[0], proposition[1]);
+					} else if (!ligne.equals("")) {
+						m.set_but(ligne);
 					}
-					m.ajouter_regle(premisses, conclusion);
-					premisses.clear();
+					ligne = br.readLine();
 				}
 				if (ligne == null) lire_fichier = false;
 			}
@@ -45,31 +66,26 @@ public class Main {
 
 		//System.out.println(m);
 
-		String strategie = "avant_largeur";
+		String strategie = "Arriere";
 		String trace = "Stratégie inexistante, impossible de lancer le moteur";
 		boolean tracer = true;
 		switch (strategie) {
-			case "avant_largeur":
-				m.ajouter_fait("action", "nager");
-				m.set_but("sport");
+			case "Avant largeur":
 				//System.out.println(m);
 				trace = m.chainage_avant_largeur();
 				break;
 
-			case "avant_profondeur":
-				m.ajouter_fait("action", "nager");
-				m.set_but("sport");
+			case "Avant profondeur":
 				//System.out.println(m);
-				trace = m.chainage_avant_profondeur();
+				trace = m.chainage_avant_profondeur("premiere");
 				break;
 
-			case "arriere":
-				m.set_but("sport", "judo");
+			case "Arriere":
 				//System.out.println(m);
 				trace = m.chainage_arriere("premiere");
 				break;
 
-			case "mixte":
+			case "Mixte":
 				//System.out.println(m);
 				trace = m.chainage_mixte();
 				break;
