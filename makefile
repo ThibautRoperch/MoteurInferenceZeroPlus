@@ -14,4 +14,4 @@ interface:
 
 clean:
 	@echo "# Nettoyage du dossier bin"
-	rm -R bin/*
+	rm bin/*
