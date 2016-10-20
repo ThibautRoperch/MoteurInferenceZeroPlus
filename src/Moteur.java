@@ -65,14 +65,7 @@ public class Moteur {
 	public void set_but(Proposition but) {
 		this.but = but;
 	}
-
-	// gestion de la cohérence
-
-	public boolean regles_coherentes() {
-		// ?
-		return true;
-	}
-
+	
 	// algorithmes d'exploitation
 
 	public String chainage_avant_largeur() {
@@ -90,6 +83,11 @@ public class Moteur {
 				if (this.base_de_faits.contains(r.get_premisses())) { // test si les premisses de la règle correspondent à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la règle
 				}
+			}
+			if (regles_valides.isEmpty()) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
+				return trace;
 			}
 			// Ajouter à la base de faits la conclusion des règles mises de côté et les supprimer de la base de règle
 			for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
@@ -131,6 +129,11 @@ public class Moteur {
 				if (this.base_de_faits.contains(r.get_premisses())) { // test si les premisses de la règle correspondent à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la règle
 				}
+			}
+			if (regles_valides.isEmpty()) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
+				return trace;
 			}
 			// Définir la façon dont la règle à appliquer sera choisie
 			Regle r_choisie = new Regle();
@@ -184,13 +187,13 @@ public class Moteur {
 	public String chainage_arriere(String strategie_conflit) {
 		String trace = "";
 		int etape = 0;
+		
+		// Ajout du but à la base de faits
+		this.base_de_faits.set(but);
 
 		// Lire les règles tant que la base de faits ne contient pas le but recherché et qu'il y a des règles encore non utilisées
-		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
+		while (this.base_de_regles.size() > 0) {
 			trace += "\n==     ETAPE " + ++etape + "     ==\n\n";
-
-			// Ajout du but à la base de faits
-			this.base_de_faits.set(but);
 
 			// Mettre de côté les règles valides (celles qui ont leur conclusion en commun avec la base de faits)
 			Vector<Regle> regles_valides = new Vector<Regle>();
@@ -199,6 +202,11 @@ public class Moteur {
 				if (this.base_de_faits.contains(r.get_conclusion())) { // test si la conclusion de la règle correspond à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la règle
 				}
+			}
+			if (regles_valides.isEmpty()) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
+				return trace;
 			}
 			// Définir la façon dont la règle à appliquer sera choisie
 			Regle r_choisie = new Regle();
