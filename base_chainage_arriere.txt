@@ -71,6 +71,10 @@ action=combattre
 ALORS
 sport=judo
 
+#FAITS
+
+action=combattre
+
 #BUT
 
-sport=judo
+sport

@@ -188,18 +188,15 @@ public class Moteur {
 		String trace = "";
 		int etape = 0;
 		
-		// Ajout du but à la base de faits
-		this.base_de_faits.set(but);
-
 		// Lire les règles tant que la base de faits ne contient pas le but recherché et qu'il y a des règles encore non utilisées
-		while (this.base_de_regles.size() > 0) {
+		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
 			trace += "\n==     ETAPE " + ++etape + "     ==\n\n";
 
-			// Mettre de côté les règles valides (celles qui ont leur conclusion en commun avec la base de faits)
+			// Mettre de côté les règles valides (celles qui ont leur conclusion en commun avec la base de faits ou qui concluent sur le type de but)
 			Vector<Regle> regles_valides = new Vector<Regle>();
 			for (Object regle : this.base_de_regles) {
 				Regle r = (Regle)regle;
-				if (this.base_de_faits.contains(r.get_conclusion())) { // test si la conclusion de la règle correspond à des propositions de la base de fait
+				if (this.base_de_faits.contains(r.get_conclusion()) || r.get_conclusion().get_variable().equals(but.get_variable())) { // test si la conclusion de la règle correspond à des propositions de la base de fait
 					regles_valides.addElement(r); // mettre de coté la règle
 				}
 			}
