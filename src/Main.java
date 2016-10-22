@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class Main {
 
@@ -66,23 +67,42 @@ public class Main {
 
 		System.out.println(m);
 
-		String strategie = "avant largeur";
+
+		//Scanner pour demander à l'utilisateur la stratégie d'exploitation de la base de règles.
+		Scanner strat = new Scanner(System.in);
+		System.out.println("Veuillez entrer la strategie d'exploitation des règles : ");
+		System.out.println("1 : chainage avant largeur");
+		System.out.println("2 : chainage avant profondeur");
+		System.out.println("3 : chainage arrière");
+		System.out.println("4 : chainage mixte");
+		
+		String strategie = strat.nextLine();
+		while(!strategie.equals("1")&&!strategie.equals("2")&&!strategie.equals("3")&&!strategie.equals("4")) {
+			System.out.println("Veuillez entrer un chiffre entre 1 et 4 afin de déterminer la stratégie d'exploitation des règles : ");
+			System.out.println("1 : chainage avant largeur");
+			System.out.println("2 : chainage avant profondeur");
+			System.out.println("3 : chainage arrière");
+			System.out.println("4 : chainage mixte");
+			strategie = strat.nextLine();
+		}
+
 		String trace = "Stratégie inexistante, impossible de lancer le moteur";
 		boolean tracer = true;
 		System.out.println("Chainage " + strategie);
-		switch (strategie) {
-			case "avant largeur":
+		switch (strategie) {	
+			case "1":		//Chainage avant_largeur
 				trace = m.chainage_avant_largeur();
 				break;
 
-			case "avant profondeur":
+			case "2":		//Chainage avant_profondeur
 				trace = m.chainage_avant_profondeur("premiere");
 				break;
 
-			case "arriere":
+			case "3":		//Chainage arrière
+				trace = m.chainage_arriere("precise");
 				break;
 
-			case "mixte":
+			case "4":		//Chainage mixte
 				trace = m.chainage_mixte();
 				break;
 

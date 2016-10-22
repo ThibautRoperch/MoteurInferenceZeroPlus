@@ -187,7 +187,7 @@ public class Moteur {
 	public String chainage_arriere(String strategie_conflit) {
 		String trace = "";
 		int etape = 0;
-		
+		Vector<Regle> hypotheses = new Vector<Regle>();
 		// Lire les règles tant que la base de faits ne contient pas le but recherché et qu'il y a des règles encore non utilisées
 		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
 			trace += "\n==     ETAPE " + ++etape + "     ==\n\n";
@@ -232,9 +232,20 @@ public class Moteur {
 					trace += "Erreur : stratégie de résolution de conflit inexistante : " + strategie_conflit + "\n";
 					break;
 			}
+			for(Object regle_v : regles_valides) {
+				Regle r_valide = (Regle)regle_v;
+				if(this.base_de_faits.contains(r_valide.get_premisses())) {
+					this.base_de_faits.set(r_valide.get_conclusion());
+				} else if(!this.base_de_faits.contains(r_valide.get_premisses())) {
+					hypotheses.add(r_valide);	
+					this.base_de_regles.remove(regle_v);
+				}
+				break;
+			}
+
 			// Ajouter à la base de faits les prémisses de la règle mise de côté choisie et la supprimer de la base de règle
 			if (this.base_de_faits.conflit(r_choisie.get_premisses())) { // verifier que ce(s) type(s) de fait(s) n'existe(nt) pas deja dans la base de faits avec une valeur différente
-				trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
+				trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà présente dans la base de faits\n";
 				trace += "Erreur : base de connaissances inconsistante : " + r_choisie + "\n";
 				return trace;
 			}
@@ -243,7 +254,7 @@ public class Moteur {
 			trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_choisie + ", ôtée de la base de règles\nAjout du(des) fait(s) " + r_choisie.get_premisses().toString(", ") + " à la base de faits\n\n";
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
 			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
-
+			
 			if (etape > this.base_de_regles.size()) {
 				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
 				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
