@@ -112,5 +112,8 @@ public class Main {
 
 		if (tracer) System.out.println(trace);
 		//System.out.println(m);
+		
+		//L'interface n'est pas terminée : il faut la mettre en lien avec le Moteur 
+		//Interface gui = new Interface();
 	}
 }

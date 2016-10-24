@@ -266,10 +266,59 @@ public class Moteur {
 	}
 
 	public String chainage_mixte() {
-		String trace = "";
+		String trace_mixte= "";
+		/*while(this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
+			String trace = "";
 		int etape = 0;
 
-		return trace;
+		// Lire les règles tant que la base de faits ne contient pas le type de but recherché et qu'il y a des règles encore non utilisées
+		while (!this.base_de_faits.contains(but) && this.base_de_regles.size() > 0) {
+			trace += "\n==     ETAPE " + ++etape + "     ==\n\n";
+
+			// Mettre de côté les règles valides (celles qui ont leur(s) prémisse(s) en commun avec la base de faits)
+			Vector<Regle> regles_valides = new Vector<Regle>();
+			for (Object regle : this.base_de_regles) {
+				Regle r = (Regle)regle;
+				if (this.base_de_faits.contains(r.get_premisses())) { // test si les premisses de la règle correspondent à des propositions de la base de fait
+					regles_valides.addElement(r); // mettre de coté la règle
+				}
+			}
+			if (regles_valides.isEmpty()) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
+				return trace;
+			}
+			// Ajouter à la base de faits la conclusion des règles mises de côté et les supprimer de la base de règle
+			for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
+				Regle r_valide = (Regle)regle_valide;
+				if (this.base_de_faits.conflit(r_valide.get_conclusion())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
+					trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
+					trace += "Erreur : base de connaissances inconsistante : " + r_valide + "\n";
+					return trace;
+				}
+				this.base_de_faits.set(r_valide.get_conclusion());
+				this.base_de_regles.remove(r_valide); // ôter la règle de la base de règles
+				trace += "[CHANGEMENTS]\nUtilisation de la règle " + r_valide + ", ôtée de la base de règles\nAjout du fait " + r_valide.get_conclusion() + " à la base de faits\n\n";
+			}
+			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
+			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
+
+			if (etape > this.base_de_regles.size()) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
+				return trace;
+			}
+		}
+		for(Object regle_valide : regles_valides) {
+			Regle r_valide = (Regle)regle_valide;
+			if(regle_valide.size() == 0) {
+				trace_mixte += chainage_arriere("premiere");
+			}
+		}
+		
+		}*/
+
+		return trace_mixte;
 	}
 
 	// affichages

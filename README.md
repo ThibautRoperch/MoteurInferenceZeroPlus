@@ -1,6 +1,14 @@
 # MoteurInferenceZeroPlus
 
+Compiler :
+    make
 
-tester un autre parcours de map (collection)
+Lancer :
+    make launch
 
-TODO : Modifier conflit dans le switch(strategie) ajouter Scanner
+Nettoyer : //clean le bin/ 
+    make clean
+
+Pour l'instant il faut changer à la main le but et les faits dans le fichier base_connaissances.txt pour effectuer différents tests.
+
+
