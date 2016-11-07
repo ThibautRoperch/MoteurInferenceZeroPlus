@@ -147,7 +147,7 @@ public class Moteur {
 				}
 			}
 			if (regles_valides.isEmpty()) {
-				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait(s) et but) sont conformes au dictionnaire de la base de règles\n";
 				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
 				return trace;
 			}
@@ -166,14 +166,14 @@ public class Moteur {
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
 			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
 
-			if (etape > this.base_de_regles.size()) {
-				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+			if (etape-1 > this.base_de_regles.size()) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait(s) et but) sont conformes au dictionnaire de la base de règles\n";
 				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
 				return trace;
 			}
 		}
 
-		return trace;
+		return trace + "\n==     SUCCES      ==\n";
 	}
 
 	public String chainage_avant_profondeur(String strategie_conflit) {
@@ -193,7 +193,7 @@ public class Moteur {
 				}
 			}
 			if (regles_valides.isEmpty()) {
-				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait(s) et but) sont conformes au dictionnaire de la base de règles\n";
 				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
 				return trace;
 			}
@@ -236,14 +236,14 @@ public class Moteur {
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
 			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
 
-			if (etape > this.base_de_regles.size()) {
-				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+			if (etape-1 > this.base_de_regles.size()) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait(s) et but) sont conformes au dictionnaire de la base de règles\n";
 				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
 				return trace;
 			}
 		}
 
-		return trace;
+		return trace + "\n==     SUCCES      ==\n";
 	}
 
 	public String chainage_arriere(String strategie_conflit) {
@@ -263,7 +263,7 @@ public class Moteur {
 				}
 			}
 			if (regles_valides.isEmpty()) {
-				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait(s) et but) sont conformes au dictionnaire de la base de règles\n";
 				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
 				return trace;
 			}
@@ -317,14 +317,14 @@ public class Moteur {
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
 			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
 			
-			if (etape > this.base_de_regles.size()) {
-				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+			if (etape-1 > this.base_de_regles.size()) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait(s) et but) sont conformes au dictionnaire de la base de règles\n";
 				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
 				return trace;
 			}
 		}
 
-		return trace;
+		return trace + "\n==     SUCCES      ==\n";
 	}
 
 	public String chainage_mixte() {
@@ -346,7 +346,7 @@ public class Moteur {
 				}
 			}
 			if (regles_valides.isEmpty()) {
-				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait(s) et but) sont conformes au dictionnaire de la base de règles\n";
 				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
 				return trace;
 			}
@@ -365,8 +365,8 @@ public class Moteur {
 			trace += "[BASE DE REGLES]\n" + this.br_toString() + "\n";
 			trace += "[BASE DE FAITS]\n" + this.bf_toString() + "\n";
 
-			if (etape > this.base_de_regles.size()) {
-				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait et but) sont conformes au dictionnaire de la base de règles\n";
+			if (etape-1 > this.base_de_regles.size()) {
+				trace += "\nErreur : impossible de terminer la recherche, vérifier que les données envoyées (base de fait(s) et but) sont conformes au dictionnaire de la base de règles\n";
 				trace += "Erreur : pas de solution possible dans cette base de connaissances\n";
 				return trace;
 			}
@@ -380,7 +380,7 @@ public class Moteur {
 		
 		}*/
 
-		return trace_mixte;
+		return trace_mixte + "\n==     SUCCES      ==\n";
 	}
 
 	// affichages

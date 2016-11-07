@@ -136,11 +136,10 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 
 		String strategie = new String();
 		String conflits = new String();
-		String trace = "Champ \"Base de connaissances\" vide ou syntaxiquement incorrect\n\nFormat requis et exemple de base :\n\n#REGLES\n\nSI\nvar1=x\nALORS\nvar2=y\n\n#FAITS\n\nvar1=x\n\n#BUT\n\nvar2";
+		String trace = "Champ \"Base de connaissances\" vide ou syntaxiquement incorrect\n\nUn exemple vous a été donné, respectez la syntaxe\n";
 
 		if (!base.isEmpty()) {
-
-			tOutput.append("\n------------------[ BASE DE CONNAISSANCES ]----------------------\n" + m);
+			tOutput.append("\n------------------[ BASE DE CONNAISSANCES ]------------------\n" + m);
 
 			switch (cConflits.getSelectedCheckbox().getLabel()) {	
 				case "Conserver la première règle":
@@ -179,9 +178,11 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 				default:
 					break;
 			}
+		} else {
+			tFichier.setText("#REGLES\n\nSI\nvar1=x\nALORS\nvar2=y\n\n#FAITS\n\nvar1=x\n\n#BUT\n\nvar2");
 		}
 
-		tOutput.append("\n------------------[ TRACE ]----------------------\n" + trace);
+		tOutput.append("\n---------------------------------[ TRACE ]---------------------------------\n" + trace);
 	}
 	
 	public static void main(String[] args) {
