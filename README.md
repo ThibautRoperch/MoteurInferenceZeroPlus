@@ -4,15 +4,18 @@ Compiler :
 
     make
 
-Lancer :
+Lancer le programme dans la console :
 
     make launch
 
-Nettoyer : (clean le bin/)
+Lancer l'interface graphique :
+
+    make interface
+
+Nettoyer le projet : (clean le bin/)
 
     make clean
 
 
-Pour l'instant il faut changer à la main le but et les faits dans le fichier base_connaissances.txt pour effectuer différents tests.
-
+Il faut changer à la main le but et les faits dans le fichier base_connaissances.txt pour effectuer différents tests.
 

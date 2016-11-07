@@ -25,6 +25,10 @@ public class Regle {
 		this.conclusion = conclusion.clone();
 	}
 
+	public void reset() {
+		indexation = 1;
+	}
+
 	// accesseurs
 
 	public Propositions get_premisses() {

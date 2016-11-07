@@ -14,7 +14,7 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 		super("Interface d'un moteur d'inférence 0+");
 		
 		// panels
-		JPanel outputPanel = new JPanel();									// contient les traces dans un textarea
+		JPanel outputPanel = new JPanel();							// contient les traces dans un textarea
 		JPanel inputPanel = new JPanel();							// contient les controles et le bouton final
 		//JSplitPane splitPane = new JSplitPane();					// contient le inputPanel et le outputPanel
 		JTabbedPane tabbedPane = new JTabbedPane();					// contient le sFichier dans un onglet et le inputPanel dans un autre ongler
@@ -24,7 +24,7 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 		tOutput.setEditable(false);
 		tOutput.setMargin(new Insets(10, 10, 10, 10));
 		JScrollPane sOutput = new JScrollPane(tOutput);
-		sOutput.setPreferredSize(new Dimension(800, 500));
+		sOutput.setPreferredSize(new Dimension(1000, 750));
 
 		// inputPanel composants
 		JPanel strategiesPanel = new JPanel();
@@ -125,11 +125,63 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 
-		String strategie = cStrategie.getSelectedCheckbox().getLabel();
-		String conflits = cConflits.getSelectedCheckbox().getLabel();
+		// Nettoie l'interface et le compteur de règles
+		tOutput.setText("");
+		new Regle().reset();
+
+		// Lit l'interface, affiche la base de connaissances du moteur, le lance et affiche la trace
 		String base = tFichier.getText();
 
-		// a compléter
+		Moteur m = new Moteur(base);
+
+		String strategie = new String();
+		String conflits = new String();
+		String trace = "Champ \"Base de connaissances\" vide ou syntaxiquement incorrect\n\nFormat requis et exemple de base :\n\n#REGLES\n\nSI\nvar1=x\nALORS\nvar2=y\n\n#FAITS\n\nvar1=x\n\n#BUT\n\nvar2";
+
+		if (!base.isEmpty()) {
+
+			tOutput.append("\n------------------[ BASE DE CONNAISSANCES ]----------------------\n" + m);
+
+			switch (cConflits.getSelectedCheckbox().getLabel()) {	
+				case "Conserver la première règle":
+					conflits = "premiere";
+					break;
+
+				case "Utiliser la règle la plus précise":
+					conflits = "precise";
+					break;
+
+				case "Utiliser la règle la plus récente":
+					conflits = "recente";
+					break;
+
+				default:
+					break;
+			}
+
+			switch (cStrategie.getSelectedCheckbox().getLabel()) {	
+				case "Avant largeur":		//Chainage avant_largeur
+					trace = m.chainage_avant_largeur();
+					break;
+
+				case "Avant profondeur":	//Chainage avant_profondeur
+					trace = m.chainage_avant_profondeur(conflits);
+					break;
+
+				case "Arrière":				//Chainage arrière
+					trace = m.chainage_arriere(conflits);
+					break;
+
+				case "Mixte":				//Chainage mixte
+					trace = m.chainage_mixte();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		tOutput.append("\n------------------[ TRACE ]----------------------\n" + trace);
 	}
 	
 	public static void main(String[] args) {

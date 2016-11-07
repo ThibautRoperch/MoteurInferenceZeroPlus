@@ -22,6 +22,68 @@ public class Moteur {
 		this.but = but.clone();
 	}
 
+	public Moteur(String base) {
+		this();
+
+		// Base représentée dans un vecteur de lignes
+		Vector<String> base_de_connaissances = new Vector<String>();
+		String ligne = "";
+		int indice = 0;
+		while (base.length() > 0) {
+			if (indice == base.length() || base.subSequence(indice, indice+1).equals("\n")) {
+				base_de_connaissances.add(ligne);
+				if (indice == base.length()) break;
+				ligne = "";
+			} else {
+				ligne += base.charAt(indice);
+			}
+			++indice;
+		}
+
+		// Traitement des lignes
+		Propositions premisses = new Propositions();
+		Proposition conclusion = new Proposition();
+		String declaration_section = new String();
+		indice = 0;
+		ligne = "";
+		while (indice < base_de_connaissances.size()) {
+			ligne = base_de_connaissances.get(indice);
+			if (ligne.contains("#")) {
+				declaration_section = ligne.substring(1);
+			} else if (declaration_section.equals("REGLES")) {
+				if (ligne.equals("SI")) {
+					ligne = base_de_connaissances.get(++indice);
+					while (!ligne.equals("ALORS") && !ligne.equals("")) {
+						String proposition[] = ligne.split("=");
+						premisses.set(proposition[0], proposition[1]);
+						ligne = base_de_connaissances.get(++indice);
+					}
+					if (ligne.equals("ALORS")) {
+						ligne = base_de_connaissances.get(++indice);
+						String proposition[] = ligne.split("=");
+						conclusion.set_variable(proposition[0]);
+						conclusion.set_valeur(proposition[1]);
+					}
+					ajouter_regle(premisses, conclusion);
+					premisses.clear();
+				}
+			} else if (declaration_section.equals("FAITS")) {
+				if (ligne.contains("=")) {
+					String proposition[] = ligne.split("=");
+					ajouter_fait(proposition[0], proposition[1]);
+				}					
+			} else if (declaration_section.equals("BUT")) {
+				if (ligne.contains("=")) {
+					String proposition[] = ligne.split("=");
+					set_but(proposition[0], proposition[1]);
+				} else if (!ligne.equals("")) {
+					set_but(ligne);
+				}
+			}
+			++indice;
+		}
+	}
+
 	// accesseurs
 
 	public Vector<Regle> get_base_de_regles() {
@@ -343,7 +405,7 @@ public class Moteur {
 	// opérateur de sortie
 
 	public String toString() {
-		return "\n[BASE DE REGLES]\n" + this.br_toString() + "\n[BASE DE FAITS]\n" + this.br_toString() + "\n[BUT RECHERCHE]\n" + this.but_toString() + "\n";
+		return "\n[BASE DE REGLES]\n" + this.br_toString() + "\n[BASE DE FAITS]\n" + this.bf_toString() + "\n\n[BUT RECHERCHE]\n" + this.but_toString() + "\n";
 	}
 
 	// main de test
