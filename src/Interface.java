@@ -67,9 +67,9 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 		// placement des composants
 		/*inputPanel.add(strategiesPanel);
 		inputPanel.add(conflitsPanel);*/
-		tabbedPane.addTab("Base de connaissances", sFichier);
 		tabbedPane.addTab("Stratégie de chaînage", strategiesPanel);
 		tabbedPane.addTab("Gestion des conflits", conflitsPanel);
+		tabbedPane.addTab("Base de connaissances", sFichier);
 		tabbedPane.setPreferredSize(new Dimension(300, 350));
 		outputPanel.add(sOutput);
 
@@ -134,14 +134,15 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 
 		Moteur m = new Moteur(base);
 
-		String strategie = new String();
-		String conflits = new String();
+		String strategie = cStrategie.getSelectedCheckbox().getLabel();
+		String conflits = cConflits.getSelectedCheckbox().getLabel();
 		String trace = "Champ \"Base de connaissances\" vide ou syntaxiquement incorrect\n\nUn exemple vous a été donné, respectez la syntaxe\n";
 
 		if (!base.isEmpty()) {
+			tOutput.append("\n-------------------------------[ OPTIONS ]-------------------------------\n\nChainage " + strategie + "\n" + conflits + "\n");
 			tOutput.append("\n------------------[ BASE DE CONNAISSANCES ]------------------\n" + m);
 
-			switch (cConflits.getSelectedCheckbox().getLabel()) {	
+			switch (conflits) {	
 				case "Conserver la première règle":
 					conflits = "premiere";
 					break;
@@ -158,7 +159,7 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 					break;
 			}
 
-			switch (cStrategie.getSelectedCheckbox().getLabel()) {	
+			switch (strategie) {	
 				case "Avant largeur":		//Chainage avant_largeur
 					trace = m.chainage_avant_largeur();
 					break;
@@ -168,7 +169,7 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 					break;
 
 				case "Arrière":				//Chainage arrière
-					trace = m.chainage_arriere(conflits);
+					trace = m.chainage_arriere();
 					break;
 
 				case "Mixte":				//Chainage mixte
@@ -178,11 +179,14 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 				default:
 					break;
 			}
+
+			tOutput.append("\n---------------------------------[ TRACE ]---------------------------------\n" + trace);
+			System.out.println("\n\nBase de connaissances finale\n" + m);
 		} else {
+			tOutput.append(trace);
 			tFichier.setText("#REGLES\n\nSI\nvar1=x\nALORS\nvar2=y\n\n#FAITS\n\nvar1=x\n\n#BUT\n\nvar2");
 		}
 
-		tOutput.append("\n---------------------------------[ TRACE ]---------------------------------\n" + trace);
 	}
 	
 	public static void main(String[] args) {

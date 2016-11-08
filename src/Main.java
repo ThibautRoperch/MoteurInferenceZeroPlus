@@ -83,7 +83,7 @@ public class Main {
 					break;
 
 				case "3":		//Chainage arrière
-					trace = m.chainage_arriere(conflits);
+					trace = m.chainage_arriere();
 					break;
 
 				case "4":		//Chainage mixte
