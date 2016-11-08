@@ -4,3 +4,4 @@ Executer les commandes suivantes
 
 make                        pour compiler
 make launch                 pour executer le programme en console
+make interface              pour executer le programme via une interface graphique
