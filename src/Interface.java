@@ -61,15 +61,25 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 		JScrollPane sFichier = new JScrollPane(tFichier);
 
 		bLaunch = new JButton("Lancer le moteur");
-		bLaunch.setPreferredSize(new Dimension(0, 75));
+		bLaunch.setPreferredSize(new Dimension(1, 75));
 		bLaunch.addActionListener(this);
+
+		// infosPanel composants
+		JTextArea tInfos = new JTextArea();
+		tInfos.setEditable(false);
+		tInfos.setMargin(new Insets(20, 10, 20, 10));
+		tInfos.append("Pour plus d'informations concernant le\nfonctionnement de ce moteur d'inférence\n0+, consultez notre rapport à l'adresse\n");
+		tInfos.append("https://docs.google.com/document/d/1psd4K_UPGkzMvmdIjZs10DjAyrOsQY718ez6HGgJtxs/edit?usp=sharing\n");
+		tInfos.append("\n\n\n\n\nPierre GRANIER--RICHARD\nThibaut ROPERCH\nM1 Infos - Angers");
+		JScrollPane sInfos = new JScrollPane(tInfos);
 
 		// placement des composants
 		/*inputPanel.add(strategiesPanel);
 		inputPanel.add(conflitsPanel);*/
+		tabbedPane.addTab("Base de connaissances", sFichier);
 		tabbedPane.addTab("Stratégie de chaînage", strategiesPanel);
 		tabbedPane.addTab("Gestion des conflits", conflitsPanel);
-		tabbedPane.addTab("Base de connaissances", sFichier);
+		tabbedPane.addTab("Paramétrer le moteur avant de le lancer", sInfos);
 		tabbedPane.setPreferredSize(new Dimension(300, 350));
 		outputPanel.add(sOutput);
 
@@ -173,7 +183,7 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 					break;
 
 				case "Mixte":				//Chainage mixte
-					trace = m.chainage_mixte();
+					trace = m.chainage_mixte(conflits);
 					break;
 
 				default:

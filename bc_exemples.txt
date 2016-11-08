@@ -1,7 +1,7 @@
 Exemples (pour le passage à l'oral) :
 
 
-== OK ==
+== SIMPLE ==
 
 #REGLES
 
@@ -63,3 +63,82 @@ var1=x
 #BUT
 
 var3
+
+
+== COMPLEXE ==                                                  Pour tester le chainage arrière
+
+#REGLES
+
+SI
+var1=x
+ALORS
+var2=y
+
+SI
+var2=y
+ALORS
+var3=y
+
+SI
+var3=y
+ALORS
+var4=7
+
+SI
+var4=7
+ALORS
+var5=ye
+
+#FAITS
+
+var1=x
+
+#BUT
+
+var5
+
+
+== THEME ==                                                     Différence flagrante entre le parcours avant en largeur et en profondeur
+
+#REGLES
+
+SI
+planche=2
+ALORS
+baton=2
+
+SI
+charbon=1
+four=1
+minerai=2
+ALORS
+fer=2
+
+SI
+baton=2
+pierre=3
+ALORS
+pioche=pierre
+
+SI
+baton=2
+pierre=2
+ALORS
+epee=pierre
+
+SI
+baton=2
+fer=2
+ALORS
+epee=fer
+
+#FAITS
+
+planche=2
+charbon=1
+four=1
+minerai=2
+
+#BUT
+
+epee

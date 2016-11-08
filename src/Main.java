@@ -87,7 +87,7 @@ public class Main {
 					break;
 
 				case "4":		//Chainage mixte
-					trace = m.chainage_mixte();
+					trace = m.chainage_mixte(conflits);
 					break;
 
 				default:
