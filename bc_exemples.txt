@@ -47,7 +47,7 @@ var1=x
 var2
 
 
-== PAS DE SOLUTIONS ==											Aucune règle ne converge vers le but recherché
+== PAS DE SOLUTION ==											Aucune règle ne converge vers le but recherché
 
 #REGLES
 
@@ -98,7 +98,7 @@ var1=x
 var5
 
 
-== THEME ==                                                     Différence flagrante entre le parcours avant en largeur et en profondeur
+== AUTRE THEME ==                                                     Différence entre le parcours avant en largeur et en profondeur
 
 #REGLES
 

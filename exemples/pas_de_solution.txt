@@ -1,0 +1,14 @@
+#REGLES
+
+SI
+var1=x
+ALORS
+var2=y
+
+#FAITS
+
+var1=x
+
+#BUT
+
+var3

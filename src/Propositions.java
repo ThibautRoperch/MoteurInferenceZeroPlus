@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class Propositions {
+public class Propositions implements Comparable<Propositions> {
 
 	protected HashMap<String, String> content;
 
@@ -30,6 +30,10 @@ public class Propositions {
 
 	public int getSize() {
 		return this.content.size();
+	}
+
+	public String get(String variable) {
+		return this.content.get(variable);
 	}
 
 	// mutateurs
@@ -103,7 +107,7 @@ public class Propositions {
 		while (i.hasNext()) {
 			String variable = (String)i.next();
 			res += variable;
-			res += " = ";
+			res += "=";
 			res += this.content.get(variable);
 
 			if (i.hasNext()) {
@@ -125,5 +129,36 @@ public class Propositions {
 			res.set(variable, valeur);
 		}
 		return res;
+	}
+
+	// itérateur
+
+	public Iterator iterator() {
+		return this.content.keySet().iterator();
+	}
+
+	// comparable
+
+	public int compareTo(Propositions p) {
+		Iterator i;
+		// Regarde si les propositions de this sont dans p
+		i = this.content.keySet().iterator();
+		while (i.hasNext()) {
+			String variable = (String)i.next();
+			String valeur = this.content.get(variable);
+			if (!p.contains(variable, valeur)) {
+				return -1;
+			}
+		}
+		// Regarde si les propositions de p sont dans this
+		i = p.iterator();
+		while (i.hasNext()) {
+			String variable = (String)i.next();
+			String valeur = p.get(variable);
+			if (!this.contains(variable, valeur)) {
+				return 1;
+			}
+		}
+		return 0;
 	}
 }

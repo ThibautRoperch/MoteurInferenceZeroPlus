@@ -1,11 +1,14 @@
 import java.util.Vector;
 import java.io.*;
+import java.util.Iterator;
 
 public class Moteur {
 
 	protected Vector<Regle> base_de_regles;
 	protected Propositions base_de_faits;
 	protected Proposition but;
+	protected Vector<Regle> base_de_regles_sauvegarde;
+	protected Propositions base_de_faits_sauvegarde;
 	
 	// constructeurs
 
@@ -100,12 +103,21 @@ public class Moteur {
 
 	// mutateurs
 
-	public void ajouter_regle(Propositions premisses, Proposition conclusion) {
-		this.ajouter_regle(new Regle(premisses, conclusion));
+	public String ajouter_regle(Propositions premisses, Proposition conclusion) {
+		return this.ajouter_regle(new Regle(premisses, conclusion));
 	}
 
-	public void ajouter_regle(Regle r) {
+	public String ajouter_regle(Regle r) {
+		// if (this.base_de_regles.contains(r)) { // Java n'appelle pas les compareTo des objets pour les chercher dans un vecteur :)
+		// 	return "La règle existe déjà dans la base de règles, elle n'y est donc pas ajoutée";
+		// }
+		for (Regle re : this.base_de_regles) {
+			if (re.compareTo(r) == 0) {
+				return "La règle existe déjà dans la base de règles, elle n'y est donc pas ajoutée";
+			}
+		}
 		this.base_de_regles.addElement(r);
+		return "La règle est ajoutée à la base de règles";
 	}
 
 	public void ajouter_fait(String variable, String valeur) {
@@ -138,9 +150,33 @@ public class Moteur {
 		return false;
 	}
 
+	// autres (pour sauvegardes et récupération de sauvegarde)
+
+	public void sauvegarder_base_de_regles() {
+		base_de_regles_sauvegarde = new Vector<Regle>();
+		base_de_regles_sauvegarde.addAll(base_de_regles);
+	}
+
+	public void sauvegarder_base_de_faits() {
+		base_de_faits_sauvegarde = new Propositions();
+		base_de_faits_sauvegarde = base_de_faits.clone();
+	}
+
+	public void retablir_base_de_regles() {
+		base_de_regles = new Vector<Regle>();
+		base_de_regles.addAll(base_de_regles_sauvegarde);
+	}
+
+	public void retablir_base_de_faits() {
+		base_de_faits = new Propositions();
+		base_de_faits = base_de_faits_sauvegarde.clone();
+	}
+
 	// algorithmes d'exploitation
 
 	public String chainage_avant_largeur() {
+		sauvegarder_base_de_regles();
+		sauvegarder_base_de_faits();
 		String trace = "";
 		int etape = 0;
 		int etape_max = this.base_de_regles.size();
@@ -188,6 +224,8 @@ public class Moteur {
 	}
 
 	public String chainage_avant_profondeur(String strategie_conflit) {
+		sauvegarder_base_de_regles();
+		sauvegarder_base_de_faits();
 		String trace = "";
 		int etape = 0;
 		int etape_max = this.base_de_regles.size();
@@ -259,6 +297,8 @@ public class Moteur {
 	}
 
 	public String chainage_arriere() {
+		sauvegarder_base_de_regles();
+		sauvegarder_base_de_faits();
 		String trace = "";
 		int etape = 0;
 		int etape_max = this.base_de_regles.size();
@@ -312,6 +352,8 @@ public class Moteur {
 	}
 
 	public String chainage_mixte(String strategie_conflit) {
+		sauvegarder_base_de_regles();
+		sauvegarder_base_de_faits();
 		String trace = "";
 		int etape = 0;
 		int etape_max = this.base_de_regles.size();
@@ -412,23 +454,55 @@ public class Moteur {
 		return trace + "\n==     SUCCES      ==\n";
 	}
 
+	public String ajouter_regle_regroupement() {
+		Propositions premisses = new Propositions();
+		Proposition conclusion = new Proposition();
+		Propositions bf = get_base_de_faits();
+		Iterator i = bf.iterator();
+		while (i.hasNext()) {
+			String variable = (String)i.next();
+			String valeur = bf.get(variable);
+			if (variable.equals(this.but.get_variable())) {
+				conclusion.set_variable(variable);
+				conclusion.set_valeur(valeur);
+			} else {
+				premisses.set(variable, valeur);
+			}
+		}
+		Regle regle_regroupe = new Regle(premisses, conclusion);
+		return regle_regroupe.toString() + "\n" + ajouter_regle(regle_regroupe);
+	}
+
 	// affichages
 
 	public String br_toString() {
 		String res = "";
-		for (Object regle : base_de_regles) {
+		for (Object regle : this.base_de_regles) {
 			Regle r = (Regle)regle;
 			res += r.toString() + "\n";
 		}
 		return res;
 	}
 
+	public String br_toFile() {
+		String res = "";
+		for (Object regle : this.base_de_regles) {
+			Regle r = (Regle)regle;
+			res += "\n" + r.toFile() + "\n";
+		}
+		return res;
+	}
+
 	public String bf_toString() {
-		return base_de_faits.toString("\n");
+		return this.base_de_faits.toString("\n");
 	}
 
 	public String but_toString() {
 		return this.but.toString();
+	}
+
+	public String toFile() {
+		return "#REGLES\n" + this.br_toFile() + "\n#FAITS\n\n" + this.bf_toString() + "\n\n#BUT\n\n" + this.but_toString();
 	}
 
 	// opérateur de sortie

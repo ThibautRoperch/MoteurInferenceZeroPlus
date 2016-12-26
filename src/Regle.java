@@ -1,5 +1,5 @@
 
-public class Regle {
+public class Regle implements Comparable<Regle> {
 
 	protected static int indexation = 1;
 
@@ -39,6 +39,10 @@ public class Regle {
 		return this.conclusion;
 	}
 
+	public int get_indice() {
+		return this.indice;
+	}
+
 	// mutateurs
 
 	public void set_premisses(Propositions premisses) {
@@ -55,4 +59,23 @@ public class Regle {
 		String res = "R" + indice + "\tSI " + this.premisses.toString(" ET ") + " ALORS " + this.conclusion;
 		return res;
 	}
+
+	// autres
+
+	public String toFile() {
+		String res = "SI\n" + this.premisses.toString("\n") + "\nALORS\n" + this.conclusion;
+		return res;
+	}
+
+	// comparable (implements Comparable avec une autre Regle, utilisée lors de l'ajout d'une Regle ssi elle n'est pas déjà dans le vecteur de Regle)
+
+    public int compareTo(Regle r) {
+		// < 0	r est avant this
+		// > 0	r est après this
+		// 0	r est égal à this
+        if (this.premisses.compareTo(r.get_premisses()) == 0 && this.conclusion.compareTo(r.get_conclusion()) == 0) {
+			return 0;
+		}
+		return this.indice - r.get_indice();
+    }
 }

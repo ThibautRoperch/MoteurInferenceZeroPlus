@@ -1,5 +1,5 @@
 
-public class Proposition {
+public class Proposition implements Comparable<Proposition> {
 
 	protected String variable;
 	protected String valeur;
@@ -39,7 +39,8 @@ public class Proposition {
 
 	public String toString() {
 		String res = "";
-		res += variable + " = " + valeur;
+		res += variable;
+		if (!valeur.equals("")) res += "=" + valeur;
 		return res;
 	}
 
@@ -50,5 +51,14 @@ public class Proposition {
 		res.set_variable(this.variable);
 		res.set_valeur(this.valeur);
 		return res;
+	}
+
+	// comparable
+
+	public int compareTo(Proposition p) {
+		if (this.variable.equals(p.get_variable()) && this.valeur.equals(p.get_valeur())) {
+			return 0;
+		}
+		return -1;
 	}
 }

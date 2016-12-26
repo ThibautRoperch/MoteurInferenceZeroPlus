@@ -96,6 +96,8 @@ public class Main {
 		}
 
 		if (tracer) System.out.println(trace);
-		//System.out.println(m);
+		m.retablir_base_de_regles();
+		System.out.println(m.ajouter_regle_regroupement());
+		System.out.println(m);
 	}
 }
