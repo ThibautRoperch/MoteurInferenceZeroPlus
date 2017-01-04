@@ -71,7 +71,7 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 		exemple = new JMenuItem("3 : Pas de solution - Pas de règle convergeant vers le but donné");
 		exemple.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent event) { chargerExemple(3); } } );
 		exemplesMenu.add(exemple);
-		exemple = new JMenuItem("4 : Test Complexe - Pour tester le chainage arrière");
+		exemple = new JMenuItem("4 : Test complexe - Pour tester le chainage arrière");
 		exemple.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent event) { chargerExemple(4); } } );
 		exemplesMenu.add(exemple);
 		exemple = new JMenuItem("5 : Autre thème - Différence entre parcours en largeur et en profondeur");
@@ -218,7 +218,7 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 		// autres
 		addWindowListener(this);
 		pack(); // != setSize(x, y)
-		setResizable(false);
+		//setResizable(false);
 		setVisible(true);
 		this.setLocation(300, 100);
 	}
@@ -426,10 +426,10 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 	public void aPropos() {
 		String message = "";
 		message += "\nMoteur d'inférence 0+ réalisé dans le cadre d'un projet de Fondement de l'Intelligence Artificielle\nà l'université d'Angers (Master 1)\n";
-		message += "\n____________________________________________________________________________________________________________________________________\n\n";
+		message += "\n                                                              __________________________________________\n\n";
 		message += "\nPour plus d'informations concernant le fonctionnement de ce moteur d'inférence 0+,\nconsultez notre rapport à l'adresse suivante :\n\n";
 		message += "https://docs.google.com/document/d/1psd4K_UPGkzMvmdIjZs10DjAyrOsQY718ez6HGgJtxs/edit?usp=sharing\n";
-		message += "\n____________________________________________________________________________________________________________________________________\n\n";
+		message += "\n                                                              __________________________________________\n\n";
 		message += "\nPierre GRANIER--RICHARD\nThibaut ROPERCH\nM1 Infos - Angers";
 		JFrame frame = new JFrame();
 		JOptionPane.showMessageDialog(frame, message, "A propos", JOptionPane.PLAIN_MESSAGE);

@@ -202,7 +202,7 @@ public class Moteur {
 			for (Object regle_valide : regles_valides) { // ajoute la conclusion de chaque regle mise de côté et supprimer cette règle de la base de connaissances
 				Regle r_valide = (Regle)regle_valide;
 				if (this.base_de_faits.conflit(r_valide.get_conclusion())) { // verifier que ce type de fait n'existe pas deja dans la base de faits avec une valeur différente
-					trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà de la base de fait\n";
+					trace += "\nErreur : conflit de règles, une règle a été appliquée et elle donne une valeur différente d'une variable déjà présente dans la base de faits\n";
 					trace += "Erreur : base de connaissances inconsistante : " + r_valide + "\n";
 					return trace;
 				}
