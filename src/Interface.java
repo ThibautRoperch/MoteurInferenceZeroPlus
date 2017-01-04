@@ -220,6 +220,7 @@ public class Interface extends JFrame implements ActionListener, WindowListener 
 		pack(); // != setSize(x, y)
 		setResizable(false);
 		setVisible(true);
+		this.setLocation(300, 100);
 	}
 
 	public void windowActivated(WindowEvent arg0) {
