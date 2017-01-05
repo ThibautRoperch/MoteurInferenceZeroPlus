@@ -5,11 +5,6 @@ var1=x
 ALORS
 var2=y
 
-SI
-var1=x
-ALORS
-var2=z
-
 #FAITS
 
 var1=x
